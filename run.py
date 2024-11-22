@@ -12,8 +12,23 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('milk_waste_management')
 
-inventory = SHEET.worksheet('inventory')
+def get_user_choice():
+    """
+    Get user to select choice
+    """
+    print("=====================================================")
+    print("= Welcome to DISC Milk Waste Management Application =")
+    print("=====================================================")
+    print("(1) View Inventory                                   ")
+    print("(2) Receive Delivery                                 ")
+    print("(3) Record Usage                                     ")
+    print("(4) Record Wastage                                   ")
+    print("(5) Record Redistribution                            ")
+    print("(6) Exit.                                            ")
+    print("=====================================================")
 
-data = inventory.get_all_values()
+    CHOICE = int(input("Select choice:"))
+    print(f"The choice selected is {CHOICE}")
 
-print(data)
+
+get_user_choice()
