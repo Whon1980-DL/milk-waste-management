@@ -25,12 +25,11 @@ def get_user_choice():
         print("(1) View Inventory                                   ")
         print("(2) Receive Delivery                                 ")
         print("(3) Record Usage                                     ")
-        print("(4) Record Wastage                                   ")
-        print("(5) Record Redistribution                            ")
-        print("(6) Exit.                                            ")
+        print("(4) View Wastage                                     ")
+        print("(5) Exit.                                            ")
         print("=====================================================")
 
-        choice = int(input("Enter your choice by entering number 1 to 6:"))
+        choice = int(input("Enter your choice by entering number 1 to 5:"))
         print("\n")
 
         if choice == 1:
@@ -40,10 +39,8 @@ def get_user_choice():
         elif choice == 3:
             removeItemFromUsage()
         elif choice == 4:
-            removeItemFromWastage()
+            viewWastage()
         elif choice == 5:
-            redistribution()
-        elif choice == 6:
             print("Exiting.")
             break
         else:
@@ -63,31 +60,45 @@ def viewInventory():
 def addItemFromDelivery():
     """
     """
-    print("Please enter date and quantity of item recieve from delivery.")
-    print("Data should begin with expiry date in the format of ddmmyyyy")
-    print("follow by today's date of same format and quantity to each hub ")
-    print("B1, Y1, R1, B2, Y2, R2 separated by commas.")
-    print("Example: 21112024, 23112024, 6, 6, 6, 6, 6, 6\n")
+    while True:
 
-    delivery_input = input("Enter your data here: ")
+        print("Please enter date and quantity of item recieve from delivery.")
+        print("Data should begin with expiry date in the format of ddmmyyyy")
+        print("and quantity to each hub B1, Y1, R1, B2, Y2, R2 separated by commas. ")
+        print("Example: 21112024, 6, 6, 6, 6, 6, 6\n")
 
-    delivery_data = delivery_input.split(",")
-    validate_data(delivery_data)
+        delivery_input = input("Enter your data here: ")
+
+        delivery_data = delivery_input.split(",")
+        
+        if validate_data(delivery_data):
+            print("Data is valid!")
+            break
+
+        return delivery_data
+
+
 
 def removeItemFromUsage():
     print("Please enter date and quantity of item that has been used")
+
+def viewWastage():
+    print("You are viewing the wastage data")
    
 def validate_data(values):
     """
     """
     try:
         [int(value) for value in values]
-        if len(values) != 8:
+        if len(values) != 7:
             raise ValueError(
-                f"Exactly 8 values required with first being the expiry date (ddmmyyyy), today's date (ddmmyyyy) then quantity for each hub"
+                f"Exactly 7 values required with first being the expiry date (ddmmyyyy) then quantity for each hub"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True
                 
 
 get_user_choice()
