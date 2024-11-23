@@ -101,13 +101,10 @@ def removeItemByUsage():
     """
 
     date_input_value = expiryDateOfMilkUsed()
-    print(date_input_value)
 
     area_used_value = areaOfMilkUsed()
-    print(area_used_value)
 
     number_bottle_used_value = quantityOfMilkUsed()
-    print(number_bottle_used_value)
 
     usage_worksheet = SHEET.worksheet('remove_by_using')
     cell1 = usage_worksheet.find(date_input_value)
@@ -144,9 +141,15 @@ def areaOfMilkUsed():
     return area_used
 
 def quantityOfMilkUsed():
-    print("Please enter the number of bottle of milk used")
+    while True:
+        print("Please enter the number of bottle of milk used")
 
-    number_of_bottle_used = input("Please enter the number of bottle here: ")
+        number_of_bottle_used = int(input("Please enter the number of bottle here: "))
+
+        if validate_number_of_bottle_input(number_of_bottle_used):
+            print(f"The number of bottle entered is {number_of_bottle_used}")
+            print("The number is valid!")
+            break
 
     return number_of_bottle_used
     
@@ -196,6 +199,21 @@ def validate_area_input(value):
         return False
 
     return True   
+
+def validate_number_of_bottle_input(value):
+    """
+    """
+    try:
+        if value == 0:
+            raise ValueError(
+                f"Number of bottle entered must not be 0"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True   
+
 
                 
 
