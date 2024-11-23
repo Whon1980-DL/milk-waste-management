@@ -106,11 +106,16 @@ def removeItemByUsage():
     area_used_value = areaOfMilkUsed()
     print(area_used_value)
 
+    number_bottle_used_value = quantityOfMilkUsed()
+    print(number_bottle_used_value)
+
     usage_worksheet = SHEET.worksheet('remove_by_using')
     cell1 = usage_worksheet.find(date_input_value)
-    print(cell1.row)
+    row = cell1.row
+    print(f"The target row is ID {row}")
     cell2 = usage_worksheet.find(area_used_value)
-    print(cell2.col)
+    column = cell2.col
+    print(f"The target column ID {column}")
 
 def expiryDateOfMilkUsed():
     while True:
@@ -137,6 +142,13 @@ def areaOfMilkUsed():
             break
 
     return area_used
+
+def quantityOfMilkUsed():
+    print("Please enter the number of bottle of milk used")
+
+    number_of_bottle_used = input("Please enter the number of bottle here: ")
+
+    return number_of_bottle_used
     
 def viewWastage():
     print("You are viewing the wastage data")
