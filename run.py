@@ -100,8 +100,17 @@ def removeItemByUsage():
     """
     """
 
-    expiryDateOfMilkUsed()
-    areaOfMilkUsed()
+    date_input_value = expiryDateOfMilkUsed()
+    print(date_input_value)
+
+    area_used_value = areaOfMilkUsed()
+    print(area_used_value)
+
+    usage_worksheet = SHEET.worksheet('remove_by_using')
+    cell1 = usage_worksheet.find(date_input_value)
+    print(cell1.row)
+    cell2 = usage_worksheet.find(area_used_value)
+    print(cell2.col)
 
 def expiryDateOfMilkUsed():
     while True:
