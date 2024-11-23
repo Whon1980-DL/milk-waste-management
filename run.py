@@ -49,8 +49,8 @@ def get_user_choice():
 def viewInventory():
     """
     """
-    inventory = SHEET.worksheet('inventory')
-    inventory_data = inventory.get_all_values()
+    inventory_worksheet = SHEET.worksheet('inventory')
+    inventory_data = inventory_worksheet.get_all_values()
 
     for inventory_data in inventory_data:
         print(inventory_data)
@@ -74,10 +74,27 @@ def addItemFromDelivery():
         if validate_data(delivery_data):
             print("Data is valid!")
             break
+    
+    update_delivery_worksheet(delivery_data)
+    update_inventory_worksheet(delivery_data)
 
-        return delivery_data
+    return delivery_data
 
+def update_delivery_worksheet(data):
+    """
+    """
+    print("Updating delivery worksheet...\n")
+    delivery_worksheet = SHEET.worksheet('delivery')
+    delivery_worksheet.append_row(data)
+    print("Delivery worksheet updated successfully.\n")
 
+def update_inventory_worksheet(data):
+    """
+    """
+    print("Updating inventory worksheet...\n")
+    inventory_worksheet = SHEET.worksheet('inventory')
+    inventory_worksheet.append_row(data)
+    print("Inventory worksheet updated successfully with deleivery data.\n")
 
 def removeItemFromUsage():
     print("Please enter date and quantity of item that has been used")
