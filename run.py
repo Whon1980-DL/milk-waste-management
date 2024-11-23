@@ -63,11 +63,11 @@ def viewInventory():
 def addItemFromDelivery():
     """
     """
-    print("Please enter date and quantity of item recieve from delivery")
-    print("Data should begin with expiry date in the order of dd-mmm-yyy")
-    print("follow by =Today() and quantity to each hub ")
+    print("Please enter date and quantity of item recieve from delivery.")
+    print("Data should begin with expiry date in the format of ddmmyyyy")
+    print("follow by today's date of same format and quantity to each hub ")
     print("B1, Y1, R1, B2, Y2, R2 separated by commas.")
-    print("Example: 30-Nov-2024, =TODAY(), 6, 6, 6, 6, 6, 6\n")
+    print("Example: 21112024, 23112024, 6, 6, 6, 6, 6, 6\n")
 
     delivery_input = input("Enter your data here: ")
 
@@ -81,9 +81,10 @@ def validate_data(values):
     """
     """
     try:
+        [int(value) for value in values]
         if len(values) != 8:
             raise ValueError(
-                f"Exactly 8 values required with first being the expiry date (dd-mmm-yyy) then =TODAY(), then quantity for each hub"
+                f"Exactly 8 values required with first being the expiry date (ddmmyyyy), today's date (ddmmyyyy) then quantity for each hub"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
