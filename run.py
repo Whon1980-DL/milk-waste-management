@@ -37,7 +37,7 @@ def get_user_choice():
         elif choice == 2:
             addItemFromDelivery()
         elif choice == 3:
-            removeItemFromUsage()
+            removeItemByUsage()
         elif choice == 4:
             viewWastage()
         elif choice == 5:
@@ -96,9 +96,21 @@ def update_inventory_worksheet(data):
     inventory_worksheet.append_row(data)
     print("Inventory worksheet updated successfully with deleivery data.\n")
 
-def removeItemFromUsage():
-    print("Please enter date and quantity of item that has been used")
+def removeItemByUsage():
+    """
+    """
+    while True:
+        print("Please enter expiry date of milk to be used (ddmmyyyy)")
 
+        date_input = input("Please enter expiry date here: ")
+
+        if validate_date_input(date_input):
+            print(f"The date you entered is {date_input}\n")
+            print("Date is valid!\n")
+            break
+
+    return date_input
+    
 def viewWastage():
     print("You are viewing the wastage data")
    
@@ -110,6 +122,21 @@ def validate_data(values):
         if len(values) != 7:
             raise ValueError(
                 f"Exactly 7 values required with first being the expiry date (ddmmyyyy) then quantity for each hub"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True
+
+def validate_date_input(values):
+    """
+    """
+    try:
+        [int(value) for value in values]
+        if len(values) != 8:
+            raise ValueError(
+                f"Exactly 8 digits number required in this format ddmmyyyy, you provided {len(values)}"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
