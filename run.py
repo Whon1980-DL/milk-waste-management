@@ -99,6 +99,11 @@ def update_inventory_worksheet(data):
 def removeItemByUsage():
     """
     """
+
+    expiryDateOfMilkUsed()
+    areaOfMilkUsed()
+
+def expiryDateOfMilkUsed():
     while True:
         print("Please enter expiry date of milk to be used (ddmmyyyy)")
 
@@ -110,6 +115,19 @@ def removeItemByUsage():
             break
 
     return date_input
+
+def areaOfMilkUsed():
+    while True:
+        print("Please enter the location for the milk to be used")
+
+        area_used = input("Please enter area here: ")
+
+        if validate_area_input(area_used):
+            print(f"The area entered is {area_used}\n")
+            print("Area is valid!")
+            break
+
+    return area_used
     
 def viewWastage():
     print("You are viewing the wastage data")
@@ -143,6 +161,21 @@ def validate_date_input(values):
         return False
 
     return True
+
+def validate_area_input(value):
+    """
+    """
+    try:
+        if value not in {"B1", "Y1", "R1", "B2", "Y2", "R2"}:
+            raise ValueError(
+                f"Value has to be B1 or Y1 or R1 or B2 or Y2 or R2"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True   
+
                 
 
 get_user_choice()
