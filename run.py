@@ -61,6 +61,8 @@ def viewInventory():
     print("\n")
 
 def addItemFromDelivery():
+    """
+    """
     print("Please enter date and quantity of item recieve from delivery")
     print("Data should begin with expiry date in the order of dd-mmm-yyy")
     print("follow by =Today() and quantity to each hub ")
@@ -70,11 +72,21 @@ def addItemFromDelivery():
     delivery_input = input("Enter your data here: ")
 
     delivery_data = delivery_input.split(",")
-    print(delivery_data)
+    validate_data(delivery_data)
 
 def removeItemFromUsage():
     print("Please enter date and quantity of item that has been used")
    
-
+def validate_data(values):
+    """
+    """
+    try:
+        if len(values) != 8:
+            raise ValueError(
+                f"Exactly 8 values required with first being the expiry date (dd-mmm-yyy) then =TODAY(), then quantity for each hub"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+                
 
 get_user_choice()
