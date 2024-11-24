@@ -25,7 +25,7 @@ def get_user_choice():
         print("(1) View Inventory                                   ")
         print("(2) Receive Delivery                                 ")
         print("(3) Record Usage                                     ")
-        print("(4) View Wastage                                     ")
+        print("(4) Record Wastage                                     ")
         print("(5) Exit.                                            ")
         print("=====================================================")
 
@@ -39,7 +39,7 @@ def get_user_choice():
         elif choice == 3:
             remove_item_by_usage()
         elif choice == 4:
-            view_wastage()
+            remove_item_by_wastage()
         elif choice == 5:
             print("Exiting.")
             break
@@ -112,21 +112,21 @@ def remove_item_by_usage():
     locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
     """
 
-    date_input_value = expiry_date_of_milk_used()
+    date_input_value = expiry_date_of_milk_used_or_wasted()
 
-    area_used_value = area_of_milk_used()
+    area_value = area_of_milk_used_or_wasted()
 
-    number_bottle_used_value = quantity_of_milk_used()
+    number_bottle_value = quantity_of_milk_used_or_wasted()
 
     usage_worksheet = SHEET.worksheet('remove_by_using')
     coordinate1 = usage_worksheet.find(date_input_value)
     row = coordinate1.row
-    coordinate2 = usage_worksheet.find(area_used_value)
+    coordinate2 = usage_worksheet.find(area_value)
     column = coordinate2.col
 
     cell_value = int(usage_worksheet.cell(row, column).value)
 
-    new_cell_value = cell_value + number_bottle_used_value
+    new_cell_value = cell_value + number_bottle_value
 
     usage_worksheet.update_cell(row, column, new_cell_value)
 
@@ -135,23 +135,62 @@ def remove_item_by_usage():
     inventory_worksheet = SHEET.worksheet('inventory')
     coordinate3 = inventory_worksheet.find(date_input_value)
     row = coordinate3.row
-    coordinate4 = inventory_worksheet.find(area_used_value)
+    coordinate4 = inventory_worksheet.find(area_value)
     column = coordinate4.col
 
     cell_value_inv = int(inventory_worksheet.cell(row, column).value)
 
-    new_cell_value_inv = cell_value_inv - number_bottle_used_value
+    new_cell_value_inv = cell_value_inv - number_bottle_value
 
     inventory_worksheet.update_cell(row, column, new_cell_value_inv)
 
     print("Inventory wroksheet updated successfully....\n")
 
-def expiry_date_of_milk_used():
+def remove_item_by_wastage():
     """
-    Request the expiry date of the milk used from user
+    Collect wastage data from user to calculate wastage in respective area, by using data collect to help 
+    locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
+    """
+    date_input_value = expiry_date_of_milk_used_or_wasted()
+
+    area_value = area_of_milk_used_or_wasted()
+
+    number_bottle_value = quantity_of_milk_used_or_wasted()
+
+    wastage_worksheet = SHEET.worksheet('remove_by_wasting')
+    coordinate1 = wastage_worksheet.find(date_input_value)
+    row = coordinate1.row
+    coordinate2 = wastage_worksheet.find(area_value)
+    column = coordinate2.col
+
+    cell_value = int(wastage_worksheet.cell(row, column).value)
+
+    new_cell_value = cell_value + number_bottle_value
+
+    wastage_worksheet.update_cell(row, column, new_cell_value)
+
+    print("Remove_by_wasting wroksheet updated successfully....\n")
+
+    inventory_worksheet = SHEET.worksheet('inventory')
+    coordinate3 = inventory_worksheet.find(date_input_value)
+    row = coordinate3.row
+    coordinate4 = inventory_worksheet.find(area_value)
+    column = coordinate4.col
+
+    cell_value_inv = int(inventory_worksheet.cell(row, column).value)
+
+    new_cell_value_inv = cell_value_inv - number_bottle_value
+
+    inventory_worksheet.update_cell(row, column, new_cell_value_inv)
+
+    print("Inventory wroksheet updated successfully....\n")
+
+def expiry_date_of_milk_used_or_wasted():
+    """
+    Request the expiry date of the milk used or wasted from user
     """
     while True:
-        print("Please enter expiry date of milk to be used (ddmmyyyy)")
+        print("Please enter expiry date of milk to be used or wasted (ddmmyyyy)")
 
         date_input = input("Please enter expiry date here: ")
 
@@ -162,37 +201,37 @@ def expiry_date_of_milk_used():
 
     return date_input
 
-def area_of_milk_used():
+def area_of_milk_used_or_wasted():
     """
-    Request the area that is milk is used from user
+    Request the area that is milk is used or wasted from user
     """
     while True:
-        print("Please enter the location for the milk to be used")
+        print("Please enter the location for the milk to be used or wasted")
 
-        area_used = input("Please enter area here: ")
+        area = input("Please enter area here: ")
 
-        if validate_area_input(area_used):
-            print(f"The area entered is {area_used}\n")
+        if validate_area_input(area):
+            print(f"The area entered is {area}\n")
             print("Area is valid!\n")
             break
 
-    return area_used
+    return area
 
-def quantity_of_milk_used():
+def quantity_of_milk_used_or_wasted():
     """
-    Request the number of bottle used from the user
+    Request the number of bottle used or wasted from the user
     """
     while True:
-        print("Please enter the number of bottle of milk used")
+        print("Please enter the number of bottle of milk used or wasted")
 
-        number_of_bottle_used = int(input("Please enter the number of bottle here: "))
+        number_of_bottle = int(input("Please enter the number of bottle here: "))
 
-        if validate_number_of_bottle_input(number_of_bottle_used):
-            print(f"The number of bottle entered is {number_of_bottle_used}\n")
+        if validate_number_of_bottle_input(number_of_bottle):
+            print(f"The number of bottle entered is {number_of_bottle}\n")
             print("The number is valid!\n")
             break
 
-    return number_of_bottle_used
+    return number_of_bottle
     
 def view_wastage():
     print("You are viewing the wastage data")
