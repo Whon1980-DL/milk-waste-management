@@ -75,52 +75,32 @@ def add_item_from_delivery():
             print("Data is valid!")
             break
 
-    update_delivery_worksheet(delivery_data)
-    update_inventory_worksheet(delivery_data)
-    add_data_to_remove_by_using_and_wasting_worksheet(delivery_data)
-
+    update_worksheet(delivery_data, "delivery")
+    update_worksheet(delivery_data, "inventory")
+    get_expiry_date_of_delivery_to_update_usage_wastage_sheet(delivery_data)
+    
     return delivery_data
 
-def update_delivery_worksheet(data):
+def update_worksheet(data, worksheet):
     """
+    Receives a list of integers to be inserted into a worksheet
+    Update the relevant worksheet with the data provided
     """
-    print("Updating delivery worksheet...\n")
-    delivery_worksheet = SHEET.worksheet('delivery')
-    delivery_worksheet.append_row(data)
-    print("Delivery worksheet updated successfully.\n")
+    print(f"Updating {worksheet} worksheet...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} worksheet updated successfully\n")
 
-def update_inventory_worksheet(data):
+def get_expiry_date_of_delivery_to_update_usage_wastage_sheet(data):
     """
     """
-    print("Updating inventory worksheet...\n")
-    inventory_worksheet = SHEET.worksheet('inventory')
-    inventory_worksheet.append_row(data)
-    print("Inventory worksheet updated successfully with deleivery data.\n")
-
-def add_data_to_remove_by_using_and_wasting_worksheet(data):
-    """
-    """
-    """while True:
-        print("Please enter the expiry date of the milk in the delivery (ddmmyyyy) followed by 0,0,0,0,0,0")
-        print("to update remove_by_using and remove_by_wasting worksheet")
-        print("Example: 21112024, 0, 0, 0, 0, 0, 0\n")
-
-        expiry_date_input = input("Enter your data here: ")
-
-        expiry_date_input_data = expiry_date_input.split(",")
-        
-        if validate_data(expiry_date_input_data):
-            print("Data is valid!")
-            break
-    
-    return expiry_date_input_data"""
-
     new_expiry_date = data[0]
     new_expiry_date_to_update_usage_wastage = [new_expiry_date, '0', '0', '0', '0', '0', '0']
+
+    update_worksheet(new_expiry_date_to_update_usage_wastage, "remove_by_using")
+    update_worksheet(new_expiry_date_to_update_usage_wastage, "remove_by_wasting")
     
     return new_expiry_date_to_update_usage_wastage
-
-"""def update_remove_by_using_worksheet_with_new_expiry_date(data):"""
 
 def remove_item_by_usage():
     """
