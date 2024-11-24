@@ -33,20 +33,20 @@ def get_user_choice():
         print("\n")
 
         if choice == 1:
-            viewInventory()
+            view_inventory()
         elif choice == 2:
-            addItemFromDelivery()
+            add_item_from_delivery()
         elif choice == 3:
-            removeItemByUsage()
+            remove_item_by_usage()
         elif choice == 4:
-            viewWastage()
+            view_wastage()
         elif choice == 5:
             print("Exiting.")
             break
         else:
             print("Invalid choice. Please try again.")
 
-def viewInventory():
+def view_inventory():
     """
     """
     inventory_worksheet = SHEET.worksheet('inventory')
@@ -57,26 +57,27 @@ def viewInventory():
     
     print("\n")
 
-def addItemFromDelivery():
+def add_item_from_delivery():
     """
     """
     while True:
 
         print("Please enter date and quantity of item recieve from delivery.")
-        print("Data should begin with expiry date in the format of ddmmyyyy")
-        print("and quantity to each hub B1, Y1, R1, B2, Y2, R2 separated by commas. ")
+        print("Data should begin with expiry date in the format of ddmmyyyy and quantity")
+        print("to each hub B1, Y1, R1, B2, Y2, R2 respectively separated by commas.")
         print("Example: 21112024, 6, 6, 6, 6, 6, 6\n")
 
         delivery_input = input("Enter your data here: ")
 
         delivery_data = delivery_input.split(",")
         
-        if validate_data(delivery_data):
+        if validate_delivery_data(delivery_data):
             print("Data is valid!")
             break
-    
+
     update_delivery_worksheet(delivery_data)
     update_inventory_worksheet(delivery_data)
+    add_data_to_remove_by_using_and_wasting_worksheet(delivery_data)
 
     return delivery_data
 
@@ -96,25 +97,56 @@ def update_inventory_worksheet(data):
     inventory_worksheet.append_row(data)
     print("Inventory worksheet updated successfully with deleivery data.\n")
 
-def removeItemByUsage():
+def add_data_to_remove_by_using_and_wasting_worksheet(data):
+    """
+    """
+    """while True:
+        print("Please enter the expiry date of the milk in the delivery (ddmmyyyy) followed by 0,0,0,0,0,0")
+        print("to update remove_by_using and remove_by_wasting worksheet")
+        print("Example: 21112024, 0, 0, 0, 0, 0, 0\n")
+
+        expiry_date_input = input("Enter your data here: ")
+
+        expiry_date_input_data = expiry_date_input.split(",")
+        
+        if validate_data(expiry_date_input_data):
+            print("Data is valid!")
+            break
+    
+    return expiry_date_input_data"""
+
+    new_expiry_date = data[0]
+    new_expiry_date_to_update_usage_wastage = [new_expiry_date, '0', '0', '0', '0', '0', '0']
+    
+    return new_expiry_date_to_update_usage_wastage
+
+"""def update_remove_by_using_worksheet_with_new_expiry_date(data):"""
+
+def remove_item_by_usage():
     """
     """
 
-    date_input_value = expiryDateOfMilkUsed()
+    date_input_value = expiry_date_of_milk_used()
 
-    area_used_value = areaOfMilkUsed()
+    area_used_value = area_of_milk_used()
 
-    number_bottle_used_value = quantityOfMilkUsed()
+    number_bottle_used_value = quantity_of_milk_used()
 
     usage_worksheet = SHEET.worksheet('remove_by_using')
-    cell1 = usage_worksheet.find(date_input_value)
-    row = cell1.row
-    print(f"The target row is ID {row}")
-    cell2 = usage_worksheet.find(area_used_value)
-    column = cell2.col
-    print(f"The target column ID {column}")
+    coordinate1 = usage_worksheet.find(date_input_value)
+    row = coordinate1.row
+    coordinate2 = usage_worksheet.find(area_used_value)
+    column = coordinate2.col
 
-def expiryDateOfMilkUsed():
+    cell_value = int(usage_worksheet.cell(row, column).value)
+
+    new_cell_value = cell_value + number_bottle_used_value
+
+    usage_worksheet.update_cell(row, column, new_cell_value)
+
+    print("Remove_by_using wroksheet updated successfully....\n")
+
+def expiry_date_of_milk_used():
     while True:
         print("Please enter expiry date of milk to be used (ddmmyyyy)")
 
@@ -127,7 +159,7 @@ def expiryDateOfMilkUsed():
 
     return date_input
 
-def areaOfMilkUsed():
+def area_of_milk_used():
     while True:
         print("Please enter the location for the milk to be used")
 
@@ -135,28 +167,28 @@ def areaOfMilkUsed():
 
         if validate_area_input(area_used):
             print(f"The area entered is {area_used}\n")
-            print("Area is valid!")
+            print("Area is valid!\n")
             break
 
     return area_used
 
-def quantityOfMilkUsed():
+def quantity_of_milk_used():
     while True:
         print("Please enter the number of bottle of milk used")
 
         number_of_bottle_used = int(input("Please enter the number of bottle here: "))
 
         if validate_number_of_bottle_input(number_of_bottle_used):
-            print(f"The number of bottle entered is {number_of_bottle_used}")
-            print("The number is valid!")
+            print(f"The number of bottle entered is {number_of_bottle_used}\n")
+            print("The number is valid!\n")
             break
 
     return number_of_bottle_used
     
-def viewWastage():
+def view_wastage():
     print("You are viewing the wastage data")
    
-def validate_data(values):
+def validate_delivery_data(values):
     """
     """
     try:
