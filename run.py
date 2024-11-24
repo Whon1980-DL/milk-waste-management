@@ -29,7 +29,7 @@ def get_user_choice():
         print("(5) Exit.                                            ")
         print("=====================================================")
 
-        choice = int(input("Enter your choice by entering number 1 to 5:"))
+        choice = int(input("Enter your choice by entering number 1 to 5:\n"))
         print("\n")
 
         if choice == 1:
@@ -70,7 +70,7 @@ def add_item_from_delivery():
         print("to each hub B1, Y1, R1, B2, Y2, R2 respectively separated by commas.")
         print("Example: 21112024, 6, 6, 6, 6, 6, 6\n")
 
-        delivery_input = input("Enter your data here: ")
+        delivery_input = input("Enter your data here:\n")
 
         delivery_data = delivery_input.split(",")
         
@@ -192,7 +192,7 @@ def expiry_date_of_milk_used_or_wasted():
     while True:
         print("Please enter expiry date of milk to be used or wasted (ddmmyyyy)")
 
-        date_input = input("Please enter expiry date here: ")
+        date_input = input("Please enter expiry date here:\n")
 
         if validate_date_input(date_input):
             print(f"The date you entered is {date_input}\n")
@@ -208,7 +208,7 @@ def area_of_milk_used_or_wasted():
     while True:
         print("Please enter the location for the milk to be used or wasted")
 
-        area = input("Please enter area here: ")
+        area = input("Please enter area here:\n")
 
         if validate_area_input(area):
             print(f"The area entered is {area}\n")
@@ -224,7 +224,7 @@ def quantity_of_milk_used_or_wasted():
     while True:
         print("Please enter the number of bottle of milk used or wasted")
 
-        number_of_bottle = int(input("Please enter the number of bottle here: "))
+        number_of_bottle = int(input("Please enter the number of bottle here:\n"))
 
         if validate_number_of_bottle_input(number_of_bottle):
             print(f"The number of bottle entered is {number_of_bottle}\n")
