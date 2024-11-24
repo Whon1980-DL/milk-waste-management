@@ -48,6 +48,7 @@ def get_user_choice():
 
 def view_inventory():
     """
+    Display inventory to user, using for loop to make data displayed more user friendly
     """
     inventory_worksheet = SHEET.worksheet('inventory')
     inventory_data = inventory_worksheet.get_all_values()
@@ -59,6 +60,8 @@ def view_inventory():
 
 def add_item_from_delivery():
     """
+    Collect delivery data from user to update delivery and inventory worksheet
+    and run a funciton to get expiry date to use with usage and wastage worksheet
     """
     while True:
 
@@ -93,6 +96,7 @@ def update_worksheet(data, worksheet):
 
 def get_expiry_date_of_delivery_to_update_usage_wastage_sheet(data):
     """
+    Get expiry date of new delivery to update usage and wastage worksheet
     """
     new_expiry_date = data[0]
     new_expiry_date_to_update_usage_wastage = [new_expiry_date, '0', '0', '0', '0', '0', '0']
@@ -104,6 +108,8 @@ def get_expiry_date_of_delivery_to_update_usage_wastage_sheet(data):
 
 def remove_item_by_usage():
     """
+    Collect usage data from user to calculate usage in respective area, by using data collect to help 
+    locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
     """
 
     date_input_value = expiry_date_of_milk_used()
@@ -126,7 +132,24 @@ def remove_item_by_usage():
 
     print("Remove_by_using wroksheet updated successfully....\n")
 
+    inventory_worksheet = SHEET.worksheet('inventory')
+    coordinate3 = inventory_worksheet.find(date_input_value)
+    row = coordinate3.row
+    coordinate4 = inventory_worksheet.find(area_used_value)
+    column = coordinate4.col
+
+    cell_value_inv = int(inventory_worksheet.cell(row, column).value)
+
+    new_cell_value_inv = cell_value_inv - number_bottle_used_value
+
+    inventory_worksheet.update_cell(row, column, new_cell_value_inv)
+
+    print("Inventory wroksheet updated successfully....\n")
+
 def expiry_date_of_milk_used():
+    """
+    Request the expiry date of the milk used from user
+    """
     while True:
         print("Please enter expiry date of milk to be used (ddmmyyyy)")
 
@@ -140,6 +163,9 @@ def expiry_date_of_milk_used():
     return date_input
 
 def area_of_milk_used():
+    """
+    Request the area that is milk is used from user
+    """
     while True:
         print("Please enter the location for the milk to be used")
 
@@ -153,6 +179,9 @@ def area_of_milk_used():
     return area_used
 
 def quantity_of_milk_used():
+    """
+    Request the number of bottle used from the user
+    """
     while True:
         print("Please enter the number of bottle of milk used")
 
@@ -170,6 +199,9 @@ def view_wastage():
    
 def validate_delivery_data(values):
     """
+    Inside the try, converts all string values into integers.
+    Raises ValueError if strings cannot be converted into int,
+    or if there aren't exactly 7 values.
     """
     try:
         [int(value) for value in values]
@@ -185,6 +217,9 @@ def validate_delivery_data(values):
 
 def validate_date_input(values):
     """
+    Inside the try, converts string value into integer.
+    Raises ValueError if strings cannot be converted into int,
+    or if there aren't exactly 8 values.
     """
     try:
         [int(value) for value in values]
@@ -200,6 +235,7 @@ def validate_date_input(values):
 
 def validate_area_input(value):
     """
+    Inside the try, check if value entered is not in the dictionary and raises ValueError if not. 
     """
     try:
         if value not in {"B1", "Y1", "R1", "B2", "Y2", "R2"}:
@@ -214,6 +250,7 @@ def validate_area_input(value):
 
 def validate_number_of_bottle_input(value):
     """
+    Inside the try, check if the value entered is equal to 0 if it is then ValueError is raised
     """
     try:
         if value == 0:
