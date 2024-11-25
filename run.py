@@ -160,7 +160,7 @@ def remove_item_by_usage():
 
     area_value = area_of_milk_removed_or_added()
 
-    Print("Please enter the number of milk bottle to be used")
+    print("Please enter the number of milk bottle to be used")
 
     number_bottle_value = quantity_of_milk_removed_or_added()
 
@@ -239,9 +239,48 @@ def remove_item_by_wastage():
 
 def record_redistribution():
     """
-    Allow user to enter data to record redistribution of milk between usage areas.
+    Allow user to enter data to record redistribution of milk between usage areas and update inventory worksheet accordingly
     """
+    print("Please enter expiry date of the milk to be redistributed (ddmmyyyy)")
+
     date_input_value = expiry_date_of_milk()
+
+    print("Please enter the location where milk is taken from")
+
+    area_value_from = area_of_milk_removed_or_added()
+
+    print("Please enter the number of milk bottle being redistributed")
+
+    number_bottle_value = quantity_of_milk_removed_or_added()
+
+    print("Please enter the location where milk is taken to")
+
+    area_value_to = area_of_milk_removed_or_added()
+
+    inventory_worksheet = SHEET.worksheet('inventory')
+    coordinate3 = inventory_worksheet.find(date_input_value)
+    row = coordinate3.row
+    coordinate4 = inventory_worksheet.find(area_value_from)
+    column1 = coordinate4.col
+    coordinate5 = inventory_worksheet.find(area_value_to)
+    column2 = coordinate5.col
+
+    cell_value_inv_from = int(inventory_worksheet.cell(row, column1).value)
+
+    new_cell_value_inv_from = cell_value_inv_from - number_bottle_value
+
+    inventory_worksheet.update_cell(row, column1, new_cell_value_inv_from)
+
+    cell_value_inv_to = int(inventory_worksheet.cell(row, column2).value)
+
+    new_cell_value_inv_to = cell_value_inv_to + number_bottle_value
+
+    inventory_worksheet.update_cell(row, column2, new_cell_value_inv_to)
+    
+    print(f"{number_bottle_value} bottle(s) of milk has been subtracted from {area_value_from} and added to {area_value_to} successfully...\n")
+    print("Inventory worksheet updated successfully....\n")
+
+    return
 
 def expiry_date_of_milk():
     """
@@ -354,7 +393,5 @@ def validate_number_of_bottle_input(value):
 
     return True   
 
-
-                
 
 get_user_choice()
