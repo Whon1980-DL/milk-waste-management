@@ -153,44 +153,16 @@ def remove_item_by_usage():
     locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
     """
     print("Please enter expiry date of the milk to be used (ddmmyyyy)")
-
     date_input_value = expiry_date_of_milk()
-
     print("Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) for the milk to be used")
-
     area_value = area_of_milk_removed_or_added()
-
     print("Please enter the number of milk bottle to be used")
-
     number_bottle_value = quantity_of_milk_removed_or_added()
 
-    usage_worksheet = SHEET.worksheet('remove_by_using')
-    coordinate1 = usage_worksheet.find(date_input_value)
-    row = coordinate1.row
-    coordinate2 = usage_worksheet.find(area_value)
-    column = coordinate2.col
+    add_inventory_to_worksheet(date_input_value, area_value, number_bottle_value, "remove_by_using")
+    remove_inventory_from_worksheet(date_input_value, area_value, number_bottle_value, "inventory")
 
-    cell_value = int(usage_worksheet.cell(row, column).value)
-
-    new_cell_value = cell_value + number_bottle_value
-
-    usage_worksheet.update_cell(row, column, new_cell_value)
-
-    print("Remove_by_using worksheet updated successfully....\n")
-
-    inventory_worksheet = SHEET.worksheet('inventory')
-    coordinate3 = inventory_worksheet.find(date_input_value)
-    row = coordinate3.row
-    coordinate4 = inventory_worksheet.find(area_value)
-    column = coordinate4.col
-
-    cell_value_inv = int(inventory_worksheet.cell(row, column).value)
-
-    new_cell_value_inv = cell_value_inv - number_bottle_value
-
-    inventory_worksheet.update_cell(row, column, new_cell_value_inv)
-
-    print("Inventory worksheet updated successfully....\n")
+    return 
 
 def remove_item_by_wastage():
     """
@@ -198,89 +170,67 @@ def remove_item_by_wastage():
     locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
     """
     print("Please enter expiry date of the milk to be wasted (ddmmyyyy)")
-
     date_input_value = expiry_date_of_milk()
-
     print("Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) for the milk to be wasted")
-
     area_value = area_of_milk_removed_or_added()
-
     print("Please enter the number of milk bottle to be wasted")
-
     number_bottle_value = quantity_of_milk_removed_or_added()
 
-    wastage_worksheet = SHEET.worksheet('remove_by_wasting')
-    coordinate1 = wastage_worksheet.find(date_input_value)
-    row = coordinate1.row
-    coordinate2 = wastage_worksheet.find(area_value)
-    column = coordinate2.col
+    add_inventory_to_worksheet(date_input_value, area_value, number_bottle_value, "remove_by_wasting")
+    remove_inventory_from_worksheet(date_input_value, area_value, number_bottle_value, "inventory")
 
-    cell_value = int(wastage_worksheet.cell(row, column).value)
-
-    new_cell_value = cell_value + number_bottle_value
-
-    wastage_worksheet.update_cell(row, column, new_cell_value)
-
-    print("Remove_by_wasting worksheet updated successfully....\n")
-
-    inventory_worksheet = SHEET.worksheet('inventory')
-    coordinate3 = inventory_worksheet.find(date_input_value)
-    row = coordinate3.row
-    coordinate4 = inventory_worksheet.find(area_value)
-    column = coordinate4.col
-
-    cell_value_inv = int(inventory_worksheet.cell(row, column).value)
-
-    new_cell_value_inv = cell_value_inv - number_bottle_value
-
-    inventory_worksheet.update_cell(row, column, new_cell_value_inv)
-
-    print("Inventory worksheet updated successfully....\n")
+    return
 
 def record_redistribution():
     """
     Allow user to enter data to record redistribution of milk between usage areas and update inventory worksheet accordingly
     """
     print("Please enter expiry date of the milk to be redistributed (ddmmyyyy)")
-
     date_input_value = expiry_date_of_milk()
-
     print("Please enter the location where milk is taken from")
-
     area_value_from = area_of_milk_removed_or_added()
-
     print("Please enter the number of milk bottle being redistributed")
-
     number_bottle_value = quantity_of_milk_removed_or_added()
-
     print("Please enter the location where milk is taken to")
-
     area_value_to = area_of_milk_removed_or_added()
 
-    inventory_worksheet = SHEET.worksheet('inventory')
-    coordinate3 = inventory_worksheet.find(date_input_value)
-    row = coordinate3.row
-    coordinate4 = inventory_worksheet.find(area_value_from)
-    column1 = coordinate4.col
-    coordinate5 = inventory_worksheet.find(area_value_to)
-    column2 = coordinate5.col
-
-    cell_value_inv_from = int(inventory_worksheet.cell(row, column1).value)
-
-    new_cell_value_inv_from = cell_value_inv_from - number_bottle_value
-
-    inventory_worksheet.update_cell(row, column1, new_cell_value_inv_from)
-
-    cell_value_inv_to = int(inventory_worksheet.cell(row, column2).value)
-
-    new_cell_value_inv_to = cell_value_inv_to + number_bottle_value
-
-    inventory_worksheet.update_cell(row, column2, new_cell_value_inv_to)
+    remove_inventory_from_worksheet(date_input_value, area_value_from, number_bottle_value, "inventory")
+    add_inventory_to_worksheet(date_input_value, area_value_to, number_bottle_value, "inventory")
     
     print(f"{number_bottle_value} bottle(s) of milk has been subtracted from {area_value_from} and added to {area_value_to} successfully...\n")
     print("Inventory worksheet updated successfully....\n")
 
     return
+
+def add_inventory_to_worksheet(date, area, quantity, worksheet):
+    """
+    Use value input by user to locate cell row and column to perform addition to.
+    """
+    worksheet_to_add = SHEET.worksheet(worksheet)
+    coordinate1 = worksheet_to_add.find(date)
+    row = coordinate1.row
+    coordinate2 = worksheet_to_add.find(area)
+    column = coordinate2.col
+    cell_value = int(worksheet_to_add.cell(row, column).value)
+    new_cell_value = cell_value + (quantity)
+    worksheet_to_add.update_cell(row, column, new_cell_value)
+   
+    return print(f"{worksheet} worksheet updated successfully....\n")
+
+def remove_inventory_from_worksheet(date, area, quantity, worksheet):
+    """
+    Use value input by user to locate cell row and column to perform subtraction from.
+    """
+    worksheet_to_remove_from = SHEET.worksheet(worksheet)
+    coordinate1 = worksheet_to_remove_from.find(date)
+    row = coordinate1.row
+    coordinate2 = worksheet_to_remove_from.find(area)
+    column = coordinate2.col
+    cell_value = int(worksheet_to_remove_from.cell(row, column).value)
+    new_cell_value = cell_value - (quantity)
+    worksheet_to_remove_from.update_cell(row, column, new_cell_value)
+
+    return print(f"{worksheet} worksheet updated successfully....\n")
 
 def expiry_date_of_milk():
     """
@@ -392,6 +342,5 @@ def validate_number_of_bottle_input(value):
         return False
 
     return True   
-
 
 get_user_choice()
