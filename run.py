@@ -25,15 +25,37 @@ def get_user_choice():
         print("(1) View Inventory                                   ")
         print("(2) Receive Delivery                                 ")
         print("(3) Record Usage                                     ")
-        print("(4) Record Wastage                                     ")
+        print("(4) Record Wastage                                   ")
         print("(5) Exit.                                            ")
         print("=====================================================")
 
         choice = int(input("Enter your choice by entering number 1 to 5:\n"))
-        print("\n")
 
         if choice == 1:
-            view_inventory()
+            """
+            Allow user to chose to view full inventory or inventory of specific date 
+            """
+
+            while True:
+                print("-----------------------------------")
+                print("(1) View Full Inventory")
+                print("(2) View Inventory of Specific Date")
+                print("(3) Back to Main menu")
+                print("-----------------------------------")
+
+                inventory_lookup_choice = int(input("Enter your choice here:\n"))
+
+                if inventory_lookup_choice == 1:
+                    view_full_inventory()
+                elif inventory_lookup_choice == 2:
+                    specific_inventory = view_specific_date_inventory()
+                    print(specific_inventory)
+                elif inventory_lookup_choice == 3:
+                    get_user_choice()
+                    break
+                else:
+                    print("Invalid choice. Please try again.")
+
         elif choice == 2:
             add_item_from_delivery()
         elif choice == 3:
@@ -46,9 +68,9 @@ def get_user_choice():
         else:
             print("Invalid choice. Please try again.")
 
-def view_inventory():
+def view_full_inventory():   
     """
-    Display inventory to user, using for loop to make data displayed more user friendly
+    Display full inventory to user, using for loop to make data displayed more user friendly.
     """
     inventory_worksheet = SHEET.worksheet('inventory')
     inventory_data = inventory_worksheet.get_all_values()
@@ -58,10 +80,25 @@ def view_inventory():
     
     print("\n")
 
+def view_specific_date_inventory():
+    """
+    Display inventory of item of specific date according to the expiry date user provide.
+    """
+    date_input_value = expiry_date_of_milk()
+    
+    inventory_worksheet = SHEET.worksheet('inventory')
+    coordinate1 = inventory_worksheet.find(date_input_value)
+    row = coordinate1.row
+
+    data = SHEET.worksheet("inventory").get_all_values()[row]
+    headings = SHEET.worksheet("inventory").get_all_values()[0]
+
+    return {heading: data for heading, data in zip(headings, data)} 
+
 def add_item_from_delivery():
     """
     Collect delivery data from user to update delivery and inventory worksheet
-    and run a funciton to get expiry date to use with usage and wastage worksheet
+    and run a funciton to get expiry date to use with usage and wastage worksheet.
     """
     while True:
 
@@ -112,7 +149,7 @@ def remove_item_by_usage():
     locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
     """
 
-    date_input_value = expiry_date_of_milk_used_or_wasted()
+    date_input_value = expiry_date_of_milk()
 
     area_value = area_of_milk_used_or_wasted()
 
@@ -151,7 +188,7 @@ def remove_item_by_wastage():
     Collect wastage data from user to calculate wastage in respective area, by using data collect to help 
     locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
     """
-    date_input_value = expiry_date_of_milk_used_or_wasted()
+    date_input_value = expiry_date_of_milk()
 
     area_value = area_of_milk_used_or_wasted()
 
@@ -185,12 +222,12 @@ def remove_item_by_wastage():
 
     print("Inventory wroksheet updated successfully....\n")
 
-def expiry_date_of_milk_used_or_wasted():
+def expiry_date_of_milk():
     """
-    Request the expiry date of the milk used or wasted from user
+    Request the expiry date of the milk the user is dealing with
     """
     while True:
-        print("Please enter expiry date of milk to be used or wasted (ddmmyyyy)")
+        print("Please enter expiry date of milk to be used/to be wasted/to looked up (ddmmyyyy)")
 
         date_input = input("Please enter expiry date here:\n")
 
