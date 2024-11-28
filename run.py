@@ -82,7 +82,7 @@ def view_full_inventory():
     inventory_data = inventory_worksheet.get_all_values()
 
     for inventory_data in inventory_data:
-        print(inventory_data)
+        print (*inventory_data, sep ='  ')
     
     print("\n")
 
