@@ -30,9 +30,11 @@ def get_user_choice():
         print("(6) Exit.                                            ")
         print("=====================================================")
 
-        choice = int(input("Enter your choice by entering number 1 to 6:\n"))
+        choice = input("Enter your choice by entering number 1 to 6:\n")
 
-        if choice == 1:
+        validate_choice_input(choice)
+
+        if choice == '1':
             """
             Allow user to chose to view full inventory or inventory of specific date 
             """
@@ -44,27 +46,29 @@ def get_user_choice():
                 print("(3) Back to Main menu")
                 print("-----------------------------------")
 
-                inventory_lookup_choice = int(input("Enter your choice here:\n"))
+                choice = input("Enter your choice here:\n")
 
-                if inventory_lookup_choice == 1:
+                validate_choice_input(choice)
+
+                if choice == '1':
                     view_full_inventory()
-                elif inventory_lookup_choice == 2:
+                elif choice == '2':
                     specific_inventory = view_specific_date_inventory()
                     print(specific_inventory)
-                elif inventory_lookup_choice == 3:
+                elif choice == '3':
                     break
                 else:
                     print("Invalid choice. Please try again.")
 
-        elif choice == 2:
+        elif choice == '2':
             add_item_from_delivery()
-        elif choice == 3:
+        elif choice == '3':
             remove_item_by_usage()
-        elif choice == 4:
+        elif choice == '4':
             remove_item_by_wastage()
-        elif choice ==5:
+        elif choice == '5':
             record_redistribution()
-        elif choice == 6:
+        elif choice == '6':
             print("Exiting.")
             break
         else:
@@ -114,6 +118,8 @@ def add_item_from_delivery():
         delivery_input = input("Enter your data here:\n")
 
         delivery_data = delivery_input.split(",")
+
+        print(delivery_data)
         
         if validate_delivery_data(delivery_data):
             print("Data is valid!")
@@ -276,6 +282,25 @@ def quantity_of_milk_removed_or_added():
             break
 
     return number_of_bottle
+
+def validate_choice_input(value):
+    """
+    Inside the try, raises ValueError if value input is an empty string.
+    """
+    try:
+        if value == " ":
+            raise ValueError(
+                f"Input value can not be empty"
+            )
+        if len(value) != 1:
+            raise ValueError(
+                f"Input value must be a single digit number, you provided {len(value)} digits number" 
+            )
+    except ValueError as e:
+        print(f"invalid data: {e}, please try again.\n")
+        return
+    
+    return
    
 def validate_delivery_data(values):
     """
