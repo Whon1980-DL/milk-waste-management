@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from datetime import datetime
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -111,18 +112,20 @@ def add_item_from_delivery():
     while True:
 
         print("Please enter date and quantity of item recieve from delivery.")
-        print("Data should begin with expiry date in the format of ddmmyyyy and quantity")
+        print("Data should begin with expiry date in the format of dd-mm-yyyy and quantity")
         print("to each hub B1, Y1, R1, B2, Y2, R2 respectively separated by commas.")
-        print("Example: 21112024, 6, 6, 6, 6, 6, 6\n")
+        print("Example: 21-11-2024, 6, 6, 6, 6, 6, 6\n")
 
-        delivery_input = input("Enter your data here:\n")
+        delivery_input = input("Enter your data here:\n") 
 
         delivery_data = delivery_input.split(",")
 
-        print(delivery_data)
-        
-        if validate_delivery_data(delivery_data):
-            print("Data is valid!")
+        date_value = delivery_data[0]
+
+        test_date_value = date_value.split("-")
+
+        if validate_delivery_data(delivery_data, test_date_value):
+            print("Data is valid)")
             break
 
     update_worksheet(delivery_data, "delivery")
@@ -255,7 +258,7 @@ def expiry_date_of_milk():
 
 def area_of_milk_removed_or_added():
     """
-    Request the area that is milk is removed or added from the user
+    Request the area that the milk is removed or added from the user
     """
     while True:
 
@@ -292,7 +295,7 @@ def validate_choice_input(value):
             raise ValueError(
                 f"Input value can not be empty"
             )
-        if len(value) != 1:
+        elif len(value) > 1:
             raise ValueError(
                 f"Input value must be a single digit number, you provided {len(value)} digits number" 
             )
@@ -301,32 +304,14 @@ def validate_choice_input(value):
         return
     
     return
-   
-def validate_delivery_data(values):
-    """
-    Inside the try, converts all string values into integers.
-    Raises ValueError if strings cannot be converted into int,
-    or if there aren't exactly 7 values.
-    """
-    try:
-        [int(value) for value in values]
-        if len(values) != 7:
-            raise ValueError(
-                f"Exactly 7 values required with first being the expiry date (ddmmyyyy) then quantity for each hub"
-            )
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
-        return False
 
-    return True
-
-def validate_date_input(values):
+"""def validate_date_input(values):
     """
-    Inside the try, converts string value into integer.
+"""Inside the try, converts string value into integer.
     Raises ValueError if strings cannot be converted into int,
     or if there aren't exactly 8 values.
     """
-    try:
+"""try:
         [int(value) for value in values]
         if len(values) != 8:
             raise ValueError(
@@ -336,7 +321,44 @@ def validate_date_input(values):
         print(f"Invalid data: {e}, please try again.\n")
         return False
 
+    return True"""
+
+def validate_delivery_data(values, date):
+    try:
+        if len(values) != 7:
+            raise ValueError(
+                f"Exactly 7 values required with first being the expiry date (dd-mm-yyyy) then quantity for each hub separated by commas"
+            )
+        validate_date_input(date)
+
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
     return True
+
+def validate_date_input(date):
+    if int(date[0]) > 31:
+        raise ValueError(
+            f"Date must be between 1 and 31"
+        )
+    elif int(date[0]) == 0:
+        raise ValueError(
+            f"Date input cannot be 0"
+        )
+    elif int(date[1]) > 12:
+        raise ValueError(
+            f"Month must be between 1 and 12"
+        )
+    elif int(date[0]) == 0:
+        raise ValueError(
+            f"Month input cannot be 0"
+        )
+    elif int(date[2]) != datetime.now().year:
+        raise ValueError(
+            f"Year eneterd is invalid"
+        )
+    return ValueError   
 
 def validate_area_input(value):
     """
