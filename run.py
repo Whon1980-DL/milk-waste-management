@@ -54,8 +54,8 @@ def get_user_choice():
                 if choice == '1':
                     view_full_inventory()
                 elif choice == '2':
-                    specific_inventory = view_specific_date_inventory()
-                    print(specific_inventory)
+                    inventory_worksheet = SHEET.worksheet('inventory')
+                    specific_inventory = view_specific_date_inventory(inventory_worksheet)
                 elif choice == '3':
                     break
                 else:
@@ -87,22 +87,28 @@ def view_full_inventory():
     
     print("\n")
 
-def view_specific_date_inventory():
+def view_specific_date_inventory(worksheet):
     """
     Display inventory of item of specific date according to the expiry date user provide.
     """
-    print("Please enter expiry date of the the milk you'd like to view (ddmmyyyy)")
+    while True:
+        print("Please enter expiry date of the the milk you'd like to view (dd-mm-yyyy)")
 
-    date_input_value = expiry_date_of_milk()
+        date_input_value = expiry_date_of_milk()
+
+        if validate_if_date_exist(worksheet, date_input_value):
+            print("Date is valid!")
+            break
     
-    inventory_worksheet = SHEET.worksheet('inventory')
-    coordinate1 = inventory_worksheet.find(date_input_value)
+    coordinate1 = worksheet.find(date_input_value)
     row = coordinate1.row
 
-    data = SHEET.worksheet("inventory").get_all_values()[row - 1]
-    headings = SHEET.worksheet("inventory").get_all_values()[0]
+    data = worksheet.get_all_values()[row - 1]
+    headings = worksheet.get_all_values()[0]
 
-    return {heading: data for heading, data in zip(headings, data)} 
+    inventory =  {heading: data for heading, data in zip(headings, data)} 
+
+    return print(inventory)
 
 def add_item_from_delivery():
     """
@@ -245,14 +251,7 @@ def expiry_date_of_milk():
     """
     Request the expiry date of the milk the user is dealing with.
     """
-    while True:
-       
-        date_input = input("Please enter expiry date here:\n")
-
-        if validate_date_input(date_input):
-            print(f"The date you entered is {date_input}\n")
-            print("Date is valid!\n")
-            break
+    date_input = input("Please enter expiry date here:\n")
 
     return date_input
 
@@ -324,6 +323,8 @@ def validate_choice_input(value):
     return True"""
 
 def validate_delivery_data(values, date):
+    """
+    """
     try:
         if len(values) != 7:
             raise ValueError(
@@ -337,7 +338,25 @@ def validate_delivery_data(values, date):
 
     return True
 
+def validate_if_date_exist(worksheet, date):
+    test_date_value = date.split("-")
+    try:
+        validate_date_input(test_date_value)
+
+        if date not in worksheet.col_values(1):
+            raise ValueError(
+            f"Date does not exist"
+        )
+
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True
+   
 def validate_date_input(date):
+    """
+    """
     if int(date[0]) > 31:
         raise ValueError(
             f"Date must be between 1 and 31"
@@ -354,7 +373,7 @@ def validate_date_input(date):
         raise ValueError(
             f"Month input cannot be 0"
         )
-    elif int(date[2]) != datetime.now().year:
+    elif int(date[2]) not in {2024, 2025}:
         raise ValueError(
             f"Year eneterd is invalid"
         )
