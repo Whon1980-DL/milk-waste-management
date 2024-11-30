@@ -190,7 +190,7 @@ def remove_item_by_usage():
     print("Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) for the milk to be used")
     area_value = get_area_of_milk_removed_or_added()
     print("Please enter the number of milk bottle to be used")
-    number_bottle_value = get_quantity_of_milk_removed_or_added()
+    number_bottle_value = get_quantity_of_milk_removed_or_added(date_input_value, area_value, 'inventory')
 
     add_inventory_to_worksheet(date_input_value, area_value, number_bottle_value, 'remove_by_using')
     remove_inventory_from_worksheet(date_input_value, area_value, number_bottle_value, 'inventory')
@@ -204,6 +204,7 @@ def remove_item_by_wastage():
     """
     while True:
         print("Please enter expiry date of the milk to be wasted (dd-mm-yyyy)")
+
         date_input_value = get_expiry_date_of_milk()
 
         worksheet = get_worksheet('remove_by_wasting')
@@ -215,7 +216,7 @@ def remove_item_by_wastage():
     print("Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) for the milk to be wasted")
     area_value = get_area_of_milk_removed_or_added()
     print("Please enter the number of milk bottle to be wasted")
-    number_bottle_value = get_quantity_of_milk_removed_or_added()
+    number_bottle_value = get_quantity_of_milk_removed_or_added(date_input_value, area_value, 'inventory')
 
     add_inventory_to_worksheet(date_input_value, area_value, number_bottle_value, "remove_by_wasting")
     remove_inventory_from_worksheet(date_input_value, area_value, number_bottle_value, "inventory")
@@ -240,7 +241,7 @@ def record_redistribution():
     print("Please enter the location where milk is taken from")
     area_value_from = get_area_of_milk_removed_or_added()
     print("Please enter the number of milk bottle being redistributed")
-    number_bottle_value = get_quantity_of_milk_removed_or_added()
+    number_bottle_value = get_quantity_of_milk_removed_or_added(date_input_value, area_value_from, 'inventory')
     print("Please enter the location where milk is taken to")
     area_value_to = get_area_of_milk_removed_or_added()
 
@@ -305,7 +306,7 @@ def get_area_of_milk_removed_or_added():
 
     return area
 
-def get_quantity_of_milk_removed_or_added():
+def get_quantity_of_milk_removed_or_added(date, area, worksheet):
     """
     Request the number of milk bottle removed or added from the user
     """
@@ -313,7 +314,7 @@ def get_quantity_of_milk_removed_or_added():
 
         number_of_bottle = input("Please enter the number of bottle here:\n")
 
-        if validate_number_of_bottle_input(number_of_bottle):
+        if validate_number_of_bottle_input(date, area, number_of_bottle, worksheet):
             print(f"The number of bottle entered is {number_of_bottle}\n")
             print("The number is valid!\n")
             break
@@ -322,7 +323,7 @@ def get_quantity_of_milk_removed_or_added():
 
 def validate_choice_input(value):
     """
-    Inside the try, raises ValueError if value input is an empty string.
+    Inside the try, raises ValueError if value input is an empty string or invalid choice.
     """
     try:
         if value == " ":
@@ -373,6 +374,7 @@ def validate_if_date_exist(worksheet, date):
    
 def validate_date_input(date):
     """
+    Check if date input is not empty and that date is valid
     """
     if int(date[0]) > 31:
         raise ValueError(
@@ -412,16 +414,27 @@ def validate_area_input(value):
 
     return True   
 
-def validate_number_of_bottle_input(value):
+def validate_number_of_bottle_input(date, area, quantity, worksheet):
     """
-    Inside the try, check if the value entered is equal to 0 if it is then ValueError is raised
+    Inside the try, check if the quantity entered is equal to 0 if it is then ValueError is raised
     """
+    worksheet_to_validate_quantity = get_worksheet(worksheet)
+    cell_location1 = worksheet_to_validate_quantity.find(date)
+    row = cell_location1.row
+    cell_location2 = worksheet_to_validate_quantity.find(area)
+    column = cell_location2.col
+    cell_value_to_compare_with = int(worksheet_to_validate_quantity.cell(row, column).value)
+
     try:
-        if value == " ":
+        if int(quantity) > cell_value_to_compare_with:
+            raise ValueError(
+                f"Qunantity to remove cannot be more than what is available in the inventory"
+            )
+        if quantity == " ":
             raise ValueError(
                 f"Input value can not be empty"
             )
-        elif int(value) == 0:
+        elif int(quantity) == 0:
             raise ValueError(
                 f"Number of bottle entered must not be 0"
             )
