@@ -54,8 +54,7 @@ def get_user_choice():
                 if choice == '1':
                     view_full_inventory()
                 elif choice == '2':
-                    inventory_worksheet = SHEET.worksheet('inventory')
-                    specific_inventory = view_specific_date_inventory(inventory_worksheet)
+                    view_specific_date_inventory()
                 elif choice == '3':
                     break
                 else:
@@ -79,29 +78,31 @@ def view_full_inventory():
     """
     Display full inventory to user, using for loop to make data displayed more user friendly.
     """
-    inventory_worksheet = SHEET.worksheet('inventory')
-    inventory_data = inventory_worksheet.get_all_values()
+    worksheet = get_worksheet('inventory')
+    inventory_data = worksheet.get_all_values()
 
     for inventory_data in inventory_data:
         print (*inventory_data, sep ='  ')
     
     print("\n")
 
-def view_specific_date_inventory(worksheet):
+def view_specific_date_inventory():
     """
     Display inventory of item of specific date according to the expiry date user provide.
     """
     while True:
         print("Please enter expiry date of the the milk you'd like to view (dd-mm-yyyy)")
 
-        date_input_value = expiry_date_of_milk()
+        date_input_value = get_expiry_date_of_milk()
+
+        worksheet = get_worksheet('inventory')
 
         if validate_if_date_exist(worksheet, date_input_value):
             print("Date is valid!")
             break
     
-    coordinate1 = worksheet.find(date_input_value)
-    row = coordinate1.row
+    cell_location = worksheet.find(date_input_value)
+    row = cell_location.row
 
     data = worksheet.get_all_values()[row - 1]
     headings = worksheet.get_all_values()[0]
@@ -140,6 +141,14 @@ def add_item_from_delivery():
     
     return delivery_data
 
+def get_worksheet(worksheet):
+    """
+    Access specific worksheet data according to the argument provided
+    """
+    worksheet_to_work_with = SHEET.worksheet(worksheet)
+
+    return worksheet_to_work_with
+
 def update_worksheet(data, worksheet):
     """
     Receives a list of integers to be inserted into a worksheet
@@ -167,15 +176,24 @@ def remove_item_by_usage():
     Collect usage data from user to calculate usage in respective area, by using data collect to help 
     locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
     """
-    print("Please enter expiry date of the milk to be used (ddmmyyyy)")
-    date_input_value = expiry_date_of_milk()
-    print("Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) for the milk to be used")
-    area_value = area_of_milk_removed_or_added()
-    print("Please enter the number of milk bottle to be used")
-    number_bottle_value = quantity_of_milk_removed_or_added()
+    while True:
+        print("Please enter expiry date of the milk to be used (dd-mm-yyyy)")
 
-    add_inventory_to_worksheet(date_input_value, area_value, number_bottle_value, "remove_by_using")
-    remove_inventory_from_worksheet(date_input_value, area_value, number_bottle_value, "inventory")
+        date_input_value = get_expiry_date_of_milk()
+
+        worksheet = get_worksheet('remove_by_using')
+    
+        if validate_if_date_exist(worksheet, date_input_value):
+            print("Date is valid!")
+            break
+
+    print("Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) for the milk to be used")
+    area_value = get_area_of_milk_removed_or_added()
+    print("Please enter the number of milk bottle to be used")
+    number_bottle_value = get_quantity_of_milk_removed_or_added()
+
+    add_inventory_to_worksheet(date_input_value, area_value, number_bottle_value, 'remove_by_using')
+    remove_inventory_from_worksheet(date_input_value, area_value, number_bottle_value, 'inventory')
 
     return 
 
@@ -184,12 +202,20 @@ def remove_item_by_wastage():
     Collect wastage data from user to calculate wastage in respective area, by using data collect to help 
     locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
     """
-    print("Please enter expiry date of the milk to be wasted (ddmmyyyy)")
-    date_input_value = expiry_date_of_milk()
+    while True:
+        print("Please enter expiry date of the milk to be wasted (dd-mm-yyyy)")
+        date_input_value = get_expiry_date_of_milk()
+
+        worksheet = get_worksheet('remove_by_wasting')
+    
+        if validate_if_date_exist(worksheet, date_input_value):
+            print("Date is valid!")
+            break
+
     print("Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) for the milk to be wasted")
-    area_value = area_of_milk_removed_or_added()
+    area_value = get_area_of_milk_removed_or_added()
     print("Please enter the number of milk bottle to be wasted")
-    number_bottle_value = quantity_of_milk_removed_or_added()
+    number_bottle_value = get_quantity_of_milk_removed_or_added()
 
     add_inventory_to_worksheet(date_input_value, area_value, number_bottle_value, "remove_by_wasting")
     remove_inventory_from_worksheet(date_input_value, area_value, number_bottle_value, "inventory")
@@ -200,14 +226,23 @@ def record_redistribution():
     """
     Allow user to enter data to record redistribution of milk between usage areas and update inventory worksheet accordingly
     """
-    print("Please enter expiry date of the milk to be redistributed (ddmmyyyy)")
-    date_input_value = expiry_date_of_milk()
+    while True:
+        print("Please enter expiry date of the milk to be redistributed (dd-mm-yyyy)")
+
+        date_input_value = get_expiry_date_of_milk()
+
+        worksheet = get_worksheet('remove_by_wasting')
+    
+        if validate_if_date_exist(worksheet, date_input_value):
+            print("Date is valid!")
+            break
+
     print("Please enter the location where milk is taken from")
-    area_value_from = area_of_milk_removed_or_added()
+    area_value_from = get_area_of_milk_removed_or_added()
     print("Please enter the number of milk bottle being redistributed")
-    number_bottle_value = quantity_of_milk_removed_or_added()
+    number_bottle_value = get_quantity_of_milk_removed_or_added()
     print("Please enter the location where milk is taken to")
-    area_value_to = area_of_milk_removed_or_added()
+    area_value_to = get_area_of_milk_removed_or_added()
 
     remove_inventory_from_worksheet(date_input_value, area_value_from, number_bottle_value, "inventory")
     add_inventory_to_worksheet(date_input_value, area_value_to, number_bottle_value, "inventory")
@@ -222,12 +257,12 @@ def add_inventory_to_worksheet(date, area, quantity, worksheet):
     Use value input by user to locate cell row and column to perform addition to.
     """
     worksheet_to_add = SHEET.worksheet(worksheet)
-    coordinate1 = worksheet_to_add.find(date)
-    row = coordinate1.row
-    coordinate2 = worksheet_to_add.find(area)
-    column = coordinate2.col
+    cell_location1 = worksheet_to_add.find(date)
+    row = cell_location1.row
+    cell_location2 = worksheet_to_add.find(area)
+    column = cell_location2.col
     cell_value = int(worksheet_to_add.cell(row, column).value)
-    new_cell_value = cell_value + (quantity)
+    new_cell_value = cell_value + int((quantity))
     worksheet_to_add.update_cell(row, column, new_cell_value)
    
     return print(f"{worksheet} worksheet updated successfully....\n")
@@ -237,17 +272,17 @@ def remove_inventory_from_worksheet(date, area, quantity, worksheet):
     Use value input by user to locate cell row and column to perform subtraction from.
     """
     worksheet_to_remove_from = SHEET.worksheet(worksheet)
-    coordinate1 = worksheet_to_remove_from.find(date)
-    row = coordinate1.row
-    coordinate2 = worksheet_to_remove_from.find(area)
-    column = coordinate2.col
+    cell_location1 = worksheet_to_remove_from.find(date)
+    row = cell_location1.row
+    cell_location2 = worksheet_to_remove_from.find(area)
+    column = cell_location2.col
     cell_value = int(worksheet_to_remove_from.cell(row, column).value)
-    new_cell_value = cell_value - (quantity)
+    new_cell_value = cell_value - int((quantity))
     worksheet_to_remove_from.update_cell(row, column, new_cell_value)
 
     return print(f"{worksheet} worksheet updated successfully....\n")
 
-def expiry_date_of_milk():
+def get_expiry_date_of_milk():
     """
     Request the expiry date of the milk the user is dealing with.
     """
@@ -255,7 +290,7 @@ def expiry_date_of_milk():
 
     return date_input
 
-def area_of_milk_removed_or_added():
+def get_area_of_milk_removed_or_added():
     """
     Request the area that the milk is removed or added from the user
     """
@@ -270,13 +305,13 @@ def area_of_milk_removed_or_added():
 
     return area
 
-def quantity_of_milk_removed_or_added():
+def get_quantity_of_milk_removed_or_added():
     """
     Request the number of milk bottle removed or added from the user
     """
     while True:
 
-        number_of_bottle = int(input("Please enter the number of bottle here:\n"))
+        number_of_bottle = input("Please enter the number of bottle here:\n")
 
         if validate_number_of_bottle_input(number_of_bottle):
             print(f"The number of bottle entered is {number_of_bottle}\n")
@@ -303,24 +338,6 @@ def validate_choice_input(value):
         return
     
     return
-
-"""def validate_date_input(values):
-    """
-"""Inside the try, converts string value into integer.
-    Raises ValueError if strings cannot be converted into int,
-    or if there aren't exactly 8 values.
-    """
-"""try:
-        [int(value) for value in values]
-        if len(values) != 8:
-            raise ValueError(
-                f"Exactly 8 digits number required in this format ddmmyyyy, you provided {len(values)}"
-            )
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
-        return False
-
-    return True"""
 
 def validate_delivery_data(values, date):
     """
@@ -369,7 +386,7 @@ def validate_date_input(date):
         raise ValueError(
             f"Month must be between 1 and 12"
         )
-    elif int(date[0]) == 0:
+    elif int(date[1]) == 0:
         raise ValueError(
             f"Month input cannot be 0"
         )
@@ -383,8 +400,9 @@ def validate_area_input(value):
     """
     Inside the try, check if value entered is not in the dictionary and raises ValueError if not. 
     """
+    worksheet = get_worksheet('inventory')
     try:
-        if value not in {"B1", "Y1", "R1", "B2", "Y2", "R2"}:
+        if value not in worksheet.row_values(1):
             raise ValueError(
                 f"Value has to be B1 or Y1 or R1 or B2 or Y2 or R2"
             )
@@ -399,7 +417,11 @@ def validate_number_of_bottle_input(value):
     Inside the try, check if the value entered is equal to 0 if it is then ValueError is raised
     """
     try:
-        if value == 0:
+        if value == " ":
+            raise ValueError(
+                f"Input value can not be empty"
+            )
+        elif int(value) == 0:
             raise ValueError(
                 f"Number of bottle entered must not be 0"
             )
