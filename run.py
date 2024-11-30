@@ -81,9 +81,17 @@ def view_full_inventory():
     worksheet = get_worksheet('inventory')
     inventory_data = worksheet.get_all_values()
 
-    for inventory_data in inventory_data:
-        print (*inventory_data, sep ='  ')
-    
+    dash = '-' * 50
+
+    for i in range(len(inventory_data)):
+        if i == 0:
+            print(dash)
+            print('{:<12s}{:>6s}{:>6s}{:>6s}{:>6s}{:>6s}{:>6s}'.format(inventory_data[i][0],inventory_data[i][1],inventory_data[i][2],inventory_data[i][3], inventory_data[i][4], inventory_data[i][5], inventory_data[i][6]))
+            print(dash)
+        else:
+            print('{:<12s}{:>6s}{:>6s}{:>6s}{:>6s}{:>6s}{:>6s}'.format(inventory_data[i][0],inventory_data[i][1],inventory_data[i][2],inventory_data[i][3], inventory_data[i][4], inventory_data[i][5], inventory_data[i][6]))
+    print(dash)       
+
     print("\n")
 
 def view_specific_date_inventory():
