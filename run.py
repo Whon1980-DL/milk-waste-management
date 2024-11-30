@@ -120,7 +120,8 @@ def add_item_from_delivery():
 
         print("Please enter date and quantity of item recieve from delivery.")
         print("Data should begin with expiry date in the format of dd-mm-yyyy and quantity")
-        print("to each hub B1, Y1, R1, B2, Y2, R2 respectively separated by commas.")
+        print("to each area B1, Y1, R1, B2, Y2, R2 respectively separated by commas.")
+        print("Please note: quantity for each area cannot exceed 100 ")
         print("Example: 21-11-2024, 6, 6, 6, 6, 6, 6\n")
 
         delivery_input = input("Enter your data here:\n") 
@@ -129,9 +130,11 @@ def add_item_from_delivery():
 
         date_value = delivery_data[0]
 
+        delivery_quantity_values = delivery_data[1:6]
+
         test_date_value = date_value.split("-")
 
-        if validate_delivery_data(delivery_data, test_date_value):
+        if validate_delivery_data(delivery_data, test_date_value, delivery_quantity_values):
             print("Data is valid)")
             break
 
@@ -340,14 +343,19 @@ def validate_choice_input(value):
     
     return
 
-def validate_delivery_data(values, date):
+def validate_delivery_data(values, date, quantity):
     """
     """
     try:
         if len(values) != 7:
             raise ValueError(
                 f"Exactly 7 values required with first being the expiry date (dd-mm-yyyy) then quantity for each hub separated by commas"
-            )
+              )
+        for x in quantity:
+            if int(x) > 100:
+                raise ValueError(
+                    f"Quantity entered for delivery cannot exceed 100"
+                )
         validate_date_input(date)
 
     except ValueError as e:
