@@ -76,7 +76,7 @@ def get_user_choice():
 
 def view_full_inventory():   
     """
-    Display full inventory to user, using for loop to make data displayed more user friendly.
+    Display full inventory to user, using for loop and format() to make data displayed more user friendly.
     """
     worksheet = get_worksheet('inventory')
     inventory_data = worksheet.get_all_values()
@@ -104,6 +104,7 @@ def view_specific_date_inventory():
         date_input_value = get_expiry_date_of_milk()
 
         worksheet = get_worksheet('inventory')
+        inventory_data = worksheet.get_all_values()
 
         if validate_if_date_exist(worksheet, date_input_value):
             print("Date is valid!")
@@ -112,12 +113,18 @@ def view_specific_date_inventory():
     cell_location = worksheet.find(date_input_value)
     row = cell_location.row
 
-    data = worksheet.get_all_values()[row - 1]
-    headings = worksheet.get_all_values()[0]
+    dash = '-' * 50
 
-    inventory =  {heading: data for heading, data in zip(headings, data)} 
+    for i in range(len(inventory_data)):
+        if i == 0:
+            print(dash)
+            print('{:<12s}{:>6s}{:>6s}{:>6s}{:>6s}{:>6s}{:>6s}'.format(inventory_data[i][0],inventory_data[i][1],inventory_data[i][2],inventory_data[i][3], inventory_data[i][4], inventory_data[i][5], inventory_data[i][6]))
+            print(dash)
+        if i == (row - 1):
+            print('{:<12s}{:>6s}{:>6s}{:>6s}{:>6s}{:>6s}{:>6s}'.format(inventory_data[i][0],inventory_data[i][1],inventory_data[i][2],inventory_data[i][3], inventory_data[i][4], inventory_data[i][5], inventory_data[i][6]))
+    print(dash)       
 
-    return print(inventory)
+    return 
 
 def add_item_from_delivery():
     """
