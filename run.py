@@ -136,7 +136,7 @@ def add_item_from_delivery():
         print("Please enter date and quantity of item recieve from delivery.")
         print("Data should begin with expiry date in the format of dd-mm-yyyy and quantity")
         print("to each location B1, Y1, R1, B2, Y2, R2 respectively separated by commas.")
-        print("Please note: quantity for each location cannot exceed 100 for each location ")
+        print("Please note: quantity for each location cannot exceed 100 unit ")
         print("Example: 21-11-2024, 6, 6, 6, 6, 6, 6\n")
 
         delivery_input = input("Enter your data here:\n") 
