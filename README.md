@@ -69,4 +69,41 @@ The application provided user with clear introduction of the idea behind the des
     * Reduction in wastage amount is evident after a certain period of application usage.
     * Exploring new features, if there is any update.
 
-### Design                          
+---
+
+### Design
+
+* Colours
+    * White font to make it easy to see on black background of the terminal.
+    * Black background that come with the build-in terminal
+
+* instruction and confirmation
+    * Instructions given at every steps of the application usage.
+    * Data provided is confirmed back to user to indicate that the application is progressing.
+
+* Flowchart
+    * [Lucidchart](https://www.lucidchart.com/)
+
+---
+
+### Features
+
+* Introduction to the idea behind the design of the application is clearly provided. In what environment is the application built for.
+* Provided choices to allow user to select with of the choice for exiting the application.
+* Clear instruction on what data is required to perform selected action and in what format it needs to be provided.
+* Error messages help guild user towards providing valid data in order for application to proceed to the next step.
+* Data display is very easy to understand and user friendly. 
+
+### Existing Features
+
+* Welcome screen
+    * Display welcome message with an introduction of the application as well as main menu.
+
+![Welcome Screen](readme_images/main_menu.png)
+
+* Google sheet
+    * The applicaiton is linked to a specific Google sheet and is allowed to edit the sheet.
+
+![Google Sheet](readme_images/linked_google_sheet.png)
+
+
