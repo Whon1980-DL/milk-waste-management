@@ -128,9 +128,20 @@ The application provided user with clear introduction of the idea behind the des
     * If choice 3 of the submenu is selected, the user will be directed back to main menu.
 
 * Record Delivery
-    * if choice 2 of the main menu is selected, the application will request user for delivery data to use for updating worksheets accordingly.The application will also notify user once relevant worksheets are updated.
+    * If choice 2 of the main menu is selected, the application will request user for delivery data to use for updating worksheets accordingly.The application will also notify user once relevant worksheets are updated.
     * The application will also insert the new expiry date onto remove_by_using and remove_by_wasting worksheets with quantity of 0 for each location for future used.
 
 ![Request for Delivery Data](readme_images/request_for_delivery_data.png)
 ![Notification of Worksheets Successfully Updated](readme_images/notification_of_worksheet_successfully_updated.png)
 
+* Record Usage
+    * if choice 3 of the main menu is selected, the application will request the expiry date of the milk they will use and the location the milk will be used and how many bottle will be used form the user. The data provided then used to calculate and update remove_by_using and inventory worksheets. 
+
+![Request Usage Data for Updating Usage Worksheet](readme_images/request_usage_data.png)
+![Notification of Worksheets Successfully Updated for Usage](readme_images/notification_of_usage_updated.png)
+
+* Record Wastage
+    * if choice 4 of the main menu is selected, the application will request the expiry date of the milk they will waste and the location the milk will be wasted and how many bottle will be wasted form the user. The data provided then used to calculate and update remove_by_wasting and inventory worksheets.
+
+![Request Usage Data for Updating Wastage Worksheet](readme_images/notification_of_wastage_updated.png)
+![Notification of Worksheets Successfully Updated for Wastage](readme_images/notification_of_wastage_updated.png)
