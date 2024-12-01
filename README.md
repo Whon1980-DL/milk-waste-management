@@ -154,3 +154,48 @@ The application provided user with clear introduction of the idea behind the des
 ![Request Redistribution data for Updating inventory Worksheet Continue](readme_images/request_redistribution_data2.png)
 ![Notification of Successful Calculation and Worksheet sucessfully updated](readme_images/notification_redistribution.png)
 
+* Exit application
+    * If choice 6 is selected, the application will display Exiting and exit the application. 
+
+## Features Left to Implement
+
+* Option to calculate average 5 days usage for next milk order.
+* Validation to check and reject if user enter expiry date that has passed the use-by-date.
+* Function to automatically erase inventory entry with 0 quantity or expiry date older than current.
+* Function to provide statistic of wastage. 
+
+---
+
+## Technologies Used
+
+* [Python](https://en.wikipedia.org/wiki/Python_(programming_language))
+
+---
+
+## Frameworks, Libraries & Programs Used
+
+* [Gitpod](https://www.gitpod.io/)
+    * To write the code.
+* [Git](https://git-scm.com/)
+    * for version control.
+* [Github](https://github.com/)
+    * Deployment of the website and storing the files online.
+* [Lucidchart](https://www.lucidchart.com/)
+    * To create a logic flowchart of the application.
+* [Heroku](https://www.heroku.com/)
+    * To deploy the project.
+* [CI Python Linter](https://pep8ci.herokuapp.com/)
+    * Check code for any issues.
+* [Google Sheets](https://docs.google.com/)
+    * To create and store spreadsheet online
+
+## Testing 
+
+CI Python Linter was used to test run.py.
+
+<details>
+<summary> run.py CI Python Linter check
+</summary>
+
+![run.py linter check](readme_images/python_linter_check.png)
+</details>
