@@ -141,7 +141,16 @@ The application provided user with clear introduction of the idea behind the des
 ![Notification of Worksheets Successfully Updated for Usage](readme_images/notification_of_usage_updated.png)
 
 * Record Wastage
-    * if choice 4 of the main menu is selected, the application will request the expiry date of the milk they will waste and the location the milk will be wasted and how many bottle will be wasted form the user. The data provided then used to calculate and update remove_by_wasting and inventory worksheets.
+    * If choice 4 of the main menu is selected, the application will request the expiry date of the milk they will waste and the location the milk will be wasted and how many bottle will be wasted form the user. The data provided then used to calculate and update remove_by_wasting and inventory worksheets.
 
-![Request Usage Data for Updating Wastage Worksheet](readme_images/notification_of_wastage_updated.png)
+![Request Usage Data for Updating Wastage Worksheet](readme_images/request_wastage_data.png)
 ![Notification of Worksheets Successfully Updated for Wastage](readme_images/notification_of_wastage_updated.png)
+
+* Record Redistribution
+    * If the user wants to record the redistribution of inventory in the case when milk expiry date is soon due and there are still a lot of milk of that expiry date left in certain location that consume less to a location that only has milk that will expire later as all the one soon to expired have been consumed, the user can select choice 5. 
+    * When choice 5 is selected, the application will request expiry date of milk the user wants to redistribute, the location redistribute from, quantity of milk redistributing and location milk is redistribute to. The application then update the relevant worksheets with the data provided for accuracy of milk movement recording. 
+
+![Request Redistribution data for Updating inventory Worksheet](readme_images/request_redistribution_data1.png)
+![Request Redistribution data for Updating inventory Worksheet Continue](readme_images/request_redistribution_data2.png)
+![Notification of Successful Calculation and Worksheet sucessfully updated](readme_images/notification_redistribution.png)
+
