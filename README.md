@@ -102,8 +102,11 @@ The application provided user with clear introduction of the idea behind the des
 ![Welcome Screen](readme_images/main_menu.png)
 
 * Google sheet
-    * The applicaiton is linked to a specific Google sheet and is allowed to edit the sheet.
+    * The application is linked to a specific Google sheet and is allowed to edit the sheet.
 
 ![Google Sheet](readme_images/linked_google_sheet.png)
 
+* View inventory menu
+    * if choice 1 of main menu is selected, the submenu to view inventory is displayed and prompt user to select further choice.
 
+![Submenu](readme_images/submenu.png)
