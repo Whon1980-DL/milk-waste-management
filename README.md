@@ -189,6 +189,12 @@ The application provided user with clear introduction of the idea behind the des
 * [Google Sheets](https://docs.google.com/)
     * To create and store spreadsheet online
 
+---
+
+## Linking to Google Sheet
+
+---
+
 ## Testing 
 
 CI Python Linter was used to test run.py.
@@ -226,4 +232,103 @@ The application was manually tested extensively using Gitpod terminal, and once 
 | Record Milk Redistribution   | Request for expiry date, location from, quantity and location to  | Input redistribution data  | As Expected |
 | Exit application  | To exit from application | Select option 6 of the Main Menu | As Expected |
 
+## Input validation testing
 
+* Menu choice
+    * Cannot continue with empty input
+    * Cannot continue with 0 input
+    * Must be number between 1 - 6
+
+![Choice input Validation]()
+
+* Delivery data
+    * Must have 7 values
+    * Date must follow dd-mm-yyyy format
+    * Day must be number between 1 - 31
+    * Month must be number between 1 - 12
+    * Year must be 2024 or 2025
+    * Quanity for each location cannot exceed 100 units
+
+![Delivery Data Validation]()
+
+* Expiry date data for removing 
+    * Must be of 10 characters
+    * Must follow dd-mm-yyyy format
+    * Must be date that is already exist in the inventory
+    * Day must be number between 1 - 31
+    * Month must be number between 1 - 12
+    * Year must be 2024 or 2025
+
+![Expiry Date Validation]()
+
+* Location data for removing and redistributing
+    * Cannot be anything else other than B1, Y1, R1, B2, Y2, R2
+
+![Location Data Validation]()
+
+* Milk quantity data for removing and redistributing 
+    * Cannot continue with empty input
+    * Cannot continue with 0 input
+    * Quantity to move from or remove cannot exceed what is available in the inventory for any respective locations
+
+![Milk Quantity Data Validation]()
+
+## Fixed Bugs
+
+* 
+
+## Deployment
+
+### Deploying to Heroku
+
+To deploy with Heroku, Code Institute Python Essentials Template was used so the python code can be viewed in a terminal in a browser
+1. Log in to Heroku or create a new account
+2. On the main page click "New" and select "Create new app"
+3. Choose your unique app name and select your region
+4. Click "Create app"
+5. On the next page find "settings" and locate "Config Vars"
+6. Click "Reveal Config Vars" and add "PORT" key and value "8000", click "Add"
+7. Scroll down, locate "Buildpack" and click "Add", select "Python"
+8. Repeat step 7. only this time add "Node.js", make sure "Python" is first
+9. Scroll to the top and select "Deploy" tab
+10. Select GitHub as deployment method and search for your repository and link them together
+11. Scroll down and select either "Enable Automatic Deploys" or "Manual Deploy"
+12. Deployed site [Milk Waste Management Application](https://milk-waste-management-5ea677ef764f.herokuapp.com/)
+
+### Forking the GitHub Repository
+
+By forking the repository, we make a copy of the original repository on our GitHub account to view and change without affecting the original repository by using these steps:
+
+1. Log in to GitHub and locate [GitHub Repository Milk Waste Management](https://github.com/Whon1980-DL/milk-waste-management)
+2. At the top of the Repository(under the main navigation) locate "Fork" button.
+3. Now you should have a copy of the original repository in your GitHub account.
+
+### Local Clone
+
+1. Log in to GitHub and locate [GitHub Repository Milk Waste Management](https://github.com/Whon1980-DL/milk-waste-management)
+2. Under the repository name click "Clone or download"
+3. Click on the code button, select clone with HTTPS, SSH or GitHub CLI and copy the link shown.
+4. Open Git Bash
+5. Change the current working directory to the location where you want the cloned directory to be made.
+6. Type `git clone` and then paste The URL copied in the step 3.
+7. Press Enter and your local clone will be created.
+
+## Credits
+
+### Code
+
+* I gained understanding of python through code institute lessons.
+* I gained more python concepts through Python for begginers presented by Telusko on YouTube.
+* Python 3.11.3 documentation.
+* MDN web docs for python [Documentation](https://developer.mozilla.org/en-US/docs/Glossary/Python).
+
+### Content
+
+* Milk Waste Management.
+* All content was written by the developer.
+
+## Acknowledgements
+
+ * My mentor Mitko Bachvarov provided helpful feedback.
+ * Slack community for encouragement.
+ * My wife for her full support and my 2 sons who have been very encouraging.
