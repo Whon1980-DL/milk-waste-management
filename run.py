@@ -15,11 +15,12 @@ SHEET = GSPREAD_CLIENT.open('milk_waste_management')
 
 def get_user_choice():
     """
-    Get user to select choice
+    Get user to select choice of the main menu or exit the application.
+    Run a while loop to request valid choice from the user
+    via the terminal, which must be a number between 1 to 6.
+    The loop will repeatedly request choice, until it is valid.
     """
-
     while True:
-
         print("===========================================================")
         print("=    Welcome to DISC Milk Waste Management Application    =")
         print("===========================================================")
@@ -44,8 +45,10 @@ def get_user_choice():
         if choice == '1':
             """
             Allow user to chose to view full inventory or inventory of specific date.
+            Run a while loop to request valid choice from the user
+            via the terminal, which must be a number between 1 to 3.
+            The loop will repeatedly request choice, until it is valid.
             """
-
             while True:
                 print("-----------------------------------")
                 print("(1) View Full Inventory")
@@ -64,21 +67,21 @@ def get_user_choice():
                 elif choice == '3':
                     break
                 else:
-                    print("Invalid choice. Please try again.")
+                    print("Invalid choice. Please try again.\n")
 
         elif choice == '2':
             add_item_from_delivery()
         elif choice == '3':
-            remove_item_by_usage()
+            remove_item_by_usage('remove_by_using', 'used')
         elif choice == '4':
-            remove_item_by_wastage()
+            remove_item_by_wastage('remove_by_wasting', 'wasted')
         elif choice == '5':
             record_redistribution()
         elif choice == '6':
             print("Exiting.")
             break
         else:
-            print("Invalid choice. Please try again.")
+            print("Invalid choice. Please try again.\n")
 
 def view_full_inventory():   
     """
@@ -102,7 +105,8 @@ def view_full_inventory():
 
 def view_specific_date_inventory():
     """
-    Display inventory of item of specific date according to the expiry date user provide.
+    Display inventory of item of specific date according to the expiry date user provided.
+    For loop and format() are used to make data displayed more user friendly.
     """
     while True:
         print("Please enter expiry date of the the milk you'd like to view (dd-mm-yyyy)")
@@ -113,7 +117,7 @@ def view_specific_date_inventory():
         inventory_data = worksheet.get_all_values()
 
         if validate_if_date_exist(worksheet, date_input_value):
-            print("Date is valid!")
+            print("Date is valid!\n")
             break
     
     cell_location = worksheet.find(date_input_value)
@@ -135,28 +139,31 @@ def view_specific_date_inventory():
 def add_item_from_delivery():
     """
     Collect delivery data from user to update delivery and inventory worksheet
-    and run a funciton to get expiry date to use with usage and wastage worksheet.
+    and run a funciton to get expiry date to update usage and wastage worksheet 
+    date list for future use. Run a while loop to collect a valid string of data from the user
+    via the terminal, which must be a string of 7 numbers separated
+    by commas where the first string must be of date of dd-mm-yyyy format.
+    The loop will repeatedly request data, until it is valid.
     """
     while True:
-
         print("Please enter date and quantity of item recieve from delivery.")
         print("Data should begin with expiry date in the format of dd-mm-yyyy and quantity")
         print("to each location B1, Y1, R1, B2, Y2, R2 respectively separated by commas.")
-        print("Please note: quantity for each location cannot exceed 100 unit ")
+        print("Please note: quantity for each location cannot exceed 100 unit. ")
         print("Example: 21-11-2024, 6, 6, 6, 6, 6, 6\n")
 
         delivery_input = input("Enter your data here:\n") 
-
+        #Turning input data into a list for validation
         delivery_data = delivery_input.split(",")
-
+        #Get the first string from the list for date validation
         date_value = delivery_data[0]
-
+        #Separate quantity from date for quanity validation
         delivery_quantity_values = delivery_data[1:6]
-
+        #Turning date into a list for date pattern and value validation
         date_value_as_list = date_value.split("-")
 
         if validate_delivery_data(delivery_data, date_value, date_value_as_list, delivery_quantity_values):
-            print("Data is valid)")
+            print("Data is valid!\n")
             break
 
     update_worksheet(delivery_data, "delivery")
@@ -175,7 +182,7 @@ def get_worksheet(worksheet):
 
 def update_worksheet(data, worksheet):
     """
-    Receives a list of integers to be inserted into a worksheet
+    Receives a list of string and integers to be inserted into a worksheet
     Update the relevant worksheet with the data provided
     """
     print(f"Updating {worksheet} worksheet...\n")
@@ -185,7 +192,7 @@ def update_worksheet(data, worksheet):
 
 def get_expiry_date_of_delivery_to_update_usage_wastage_sheet(data):
     """
-    Get expiry date of new delivery to update usage and wastage worksheet
+    Get expiry date of new delivery to update usage and wastage worksheet for future use.
     """
     new_expiry_date = data[0]
     new_expiry_date_to_update_usage_wastage = [new_expiry_date, '0', '0', '0', '0', '0', '0']
@@ -195,55 +202,21 @@ def get_expiry_date_of_delivery_to_update_usage_wastage_sheet(data):
     
     return new_expiry_date_to_update_usage_wastage
 
-def remove_item_by_usage():
+def remove_item_by_usage(worksheet, process):
     """
     Collect usage data from user to calculate usage in respective location, by using data collect to help 
     locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
     """
-    while True:
-        print("Please enter expiry date of the milk to be used (dd-mm-yyyy)")
-
-        date_input_value = get_expiry_date_of_milk()
-
-        worksheet = get_worksheet('remove_by_using')
-    
-        if validate_if_date_exist(worksheet, date_input_value):
-            print("Date is valid!")
-            break
-
-    print("Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) for the milk to be used")
-    location_value = get_location_of_milk_removed_or_added()
-    print("Please enter the number of milk bottle to be used")
-    number_bottle_value = get_quantity_of_milk_removed_or_added(date_input_value, location_value, 'inventory')
-
-    add_inventory_to_worksheet(date_input_value, location_value, number_bottle_value, 'remove_by_using')
-    remove_inventory_from_worksheet(date_input_value, location_value, number_bottle_value, 'inventory')
+    get_milk_data_to_be_removed_and_called_remove_and_add_function(worksheet, process)
 
     return 
 
-def remove_item_by_wastage():
+def remove_item_by_wastage(worksheet, process):
     """
     Collect wastage data from user to calculate wastage in respective location, by using data collect to help 
     locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
     """
-    while True:
-        print("Please enter expiry date of the milk to be wasted (dd-mm-yyyy)")
-
-        date_input_value = get_expiry_date_of_milk()
-
-        worksheet = get_worksheet('remove_by_wasting')
-    
-        if validate_if_date_exist(worksheet, date_input_value):
-            print("Date is valid!")
-            break
-
-    print("Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) for the milk to be wasted")
-    location_value = get_location_of_milk_removed_or_added()
-    print("Please enter the number of milk bottle to be wasted")
-    number_bottle_value = get_quantity_of_milk_removed_or_added(date_input_value, location_value, 'inventory')
-
-    add_inventory_to_worksheet(date_input_value, location_value, number_bottle_value, "remove_by_wasting")
-    remove_inventory_from_worksheet(date_input_value, location_value, number_bottle_value, "inventory")
+    get_milk_data_to_be_removed_and_called_remove_and_add_function(worksheet, process)
 
     return
 
@@ -259,7 +232,7 @@ def record_redistribution():
         worksheet = get_worksheet('remove_by_wasting')
     
         if validate_if_date_exist(worksheet, date_input_value):
-            print("Date is valid!")
+            print("Date is valid!\n")
             break
 
     print("Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) where milk is taken from")
@@ -276,6 +249,30 @@ def record_redistribution():
     print("Inventory worksheet updated successfully....\n")
 
     return
+
+def get_milk_data_to_be_removed_and_called_remove_and_add_function(worksheet_to_add, process):
+    """
+    """
+    while True:
+        print(f"Please enter expiry date of the milk to be {process} (dd-mm-yyyy)")
+
+        date_input_value = get_expiry_date_of_milk()
+
+        worksheet = get_worksheet(worksheet_to_add)
+    
+        if validate_if_date_exist(worksheet, date_input_value):
+            print("Date is valid!\n")
+            break
+
+    print(f"Please enter the location (B1 or Y1 or R1 or B2 or Y2 or R2) for the milk to be {process}")
+    location_value = get_location_of_milk_removed_or_added()
+    print(f"Please enter the number of milk bottle to be {process}")
+    number_bottle_value = get_quantity_of_milk_removed_or_added(date_input_value, location_value, 'inventory')
+
+    add_inventory_to_worksheet(date_input_value, location_value, number_bottle_value, worksheet_to_add)
+    remove_inventory_from_worksheet(date_input_value, location_value, number_bottle_value, 'inventory')
+
+    return 
 
 def add_inventory_to_worksheet(date, location, quantity, worksheet):
     """
