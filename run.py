@@ -12,7 +12,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('milk_waste_management')
 
-def get_user_choice():
+def display_main_menu_and_get_user_choice():
     """
     Get user to select choice of the main menu or exit the application.
     Run a while loop to request valid choice from the user
@@ -20,7 +20,7 @@ def get_user_choice():
     The loop will repeatedly request choice, until it is valid.
     """
     while True:
-        print("=============================================================")
+        print("======================== Main Menu ==========================")
         print("(1) View Inventory                                           ")
         print("(2) Receive Delivery                                         ")
         print("(3) Record Usage                                             ")
@@ -496,6 +496,7 @@ def validate_number_of_bottle_input(date, location, quantity, worksheet):
 print("=============================================================")
 print("=     Welcome to DISC Milk Waste Management Application     =")
 print("=============================================================")
+print("\n")
 print("     In a sustainable world it is always a best practice     ")
 print("    to aim for zero food waste. With the features of this    ")
 print("     application to automate data spreadsheet, users can     ")
@@ -503,5 +504,6 @@ print("  easily record and view all related data thus encouraging   ")
 print(" accurate recording and readiness of data for easy analysis. ")
 print("This application is built for a building that has 6 locations")
 print("   (B1, Y1, R1, B2, Y2, R2) where milk is stored and used.   ")
+print("\n")
 
-get_user_choice()
+display_main_menu_and_get_user_choice()
