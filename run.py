@@ -21,22 +21,14 @@ def get_user_choice():
     The loop will repeatedly request choice, until it is valid.
     """
     while True:
-        print("===========================================================")
-        print("=    Welcome to DISC Milk Waste Management Application    =")
-        print("===========================================================")
-        print("    In a sustainable world it is also a best practice      ")
-        print("   to aim for zero food waste. With the features of this   ")
-        print("   application to automate data spreadsheet users can      ")
-        print(" easily record and view all related data thus encouraging  ")
-        print("accurate recording and readiness of data for easy analysis.")
-        print("===========================================================")
-        print("(1) View Inventory                                         ")
-        print("(2) Receive Delivery                                       ")
-        print("(3) Record Usage                                           ")
-        print("(4) Record Wastage.                                        ")
-        print("(5) Record Redistribution.                                 ")
-        print("(6) Exit.                                                  ")
-        print("===========================================================")
+        print("=============================================================")
+        print("(1) View Inventory                                           ")
+        print("(2) Receive Delivery                                         ")
+        print("(3) Record Usage                                             ")
+        print("(4) Record Wastage.                                          ")
+        print("(5) Record Redistribution.                                   ")
+        print("(6) Exit.                                                    ")
+        print("=============================================================")
 
         choice = input("Enter your choice by entering number 1 to 6:\n")
 
@@ -124,7 +116,7 @@ def view_specific_date_inventory():
     row = cell_location.row
 
     dash = '-' * 50
-
+    #Only display the headings and data of specific date provided
     for i in range(len(inventory_data)):
         if i == 0:
             print(dash)
@@ -158,7 +150,7 @@ def add_item_from_delivery():
         #Get the first string from the list for date validation
         date_value = delivery_data[0]
         #Separate quantity from date for quanity validation
-        delivery_quantity_values = delivery_data[1:6]
+        delivery_quantity_values = delivery_data[1:7]
         #Turning date into a list for date pattern and value validation
         date_value_as_list = date_value.split("-")
 
@@ -204,8 +196,9 @@ def get_expiry_date_of_delivery_to_update_usage_wastage_sheet(data):
 
 def remove_item_by_usage(worksheet, process):
     """
-    Collect usage data from user to calculate usage in respective location, by using data collect to help 
-    locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
+    Allow user to record milk usage by calling a function to request date, location and quanity and in turn
+    call for another function to validate the data provided which if pass then call a funciton to perform 
+    simple calculation on relavent worksheet. 
     """
     get_milk_data_to_be_removed_and_called_remove_and_add_function(worksheet, process)
 
@@ -213,8 +206,9 @@ def remove_item_by_usage(worksheet, process):
 
 def remove_item_by_wastage(worksheet, process):
     """
-    Collect wastage data from user to calculate wastage in respective location, by using data collect to help 
-    locate cell coordinate to be updated. The data collected is also used to update inventory worksheet.
+    Allow user to record milk wastage by calling a function to request date, location and quanity and in turn
+    call for another function to validate the data provided which if pass then call a funciton to perform 
+    simple calculation on relavent worksheet. 
     """
     get_milk_data_to_be_removed_and_called_remove_and_add_function(worksheet, process)
 
@@ -222,7 +216,9 @@ def remove_item_by_wastage(worksheet, process):
 
 def record_redistribution():
     """
-    Allow user to enter data to record redistribution of milk between usage locations and update inventory worksheet accordingly
+    Allow user to enter data to record redistribution of milk between usage locations and update inventory worksheet accordingly.
+    This allow user to move inventory around so oldest date are used up while keeping track of the movement.
+    All data provideded are validate before a function for relavent calculation is called.
     """
     while True:
         print("Please enter expiry date of the milk to be redistributed (dd-mm-yyyy)")
@@ -252,6 +248,8 @@ def record_redistribution():
 
 def get_milk_data_to_be_removed_and_called_remove_and_add_function(worksheet_to_add, process):
     """
+    Collect usage or wastage data from user to calculate usage or wastage in respective location, by using data collect to help 
+    locate cell coordinate to be updated. The data collected is also used to update inventory worksheet. 
     """
     while True:
         print(f"Please enter expiry date of the milk to be {process} (dd-mm-yyyy)")
@@ -363,6 +361,8 @@ def validate_choice_input(value):
 
 def validate_delivery_data(values, date_value, date_value_as_list, quantity):
     """
+    Validate if the data input follow the correct format and maximum quanity allow for milk is adhered to.
+    Inside the try, raises ValueError if data is not equal to 7 strings and if the quanity to each location exceed 100.
     """
     try:
         if len(values) != 7:
@@ -383,6 +383,10 @@ def validate_delivery_data(values, date_value, date_value_as_list, quantity):
     return True
 
 def validate_if_date_exist(worksheet, date):
+    """
+    Validate to check if date provided by the user exist, if not the date will not be accepted and request for date that already existed.
+    The function also called for date provided to be checked to see if the date is valid and follow correct pattern or not.
+    """
     date_value_as_list = date.split("-")
     try:
         validate_date_input(date, date_value_as_list)
@@ -400,7 +404,8 @@ def validate_if_date_exist(worksheet, date):
    
 def validate_date_input(date_value, date_value_as_list):
     """
-    Check if date input is not empty and that date is valid
+    Inside the try, check if date input is not empty and that date is valid and follow correct pattern. 
+    ValueError is returned and used by the funciton that called this validation method to display error or pass the validation process.
     """
     if len(date_value) != 10:
         raise ValueError(
@@ -442,7 +447,8 @@ def validate_date_input(date_value, date_value_as_list):
 
 def validate_location_input(value):
     """
-    Inside the try, check if value entered is not in the dictionary and raises ValueError if not. 
+    Inside the try, check if value entered is not in the dictionary that represent all locations in 
+    the building and raises ValueError if not. 
     """
     worksheet = get_worksheet('inventory')
     try:
@@ -458,7 +464,9 @@ def validate_location_input(value):
 
 def validate_number_of_bottle_input(date, location, quantity, worksheet):
     """
-    Inside the try, check if the quantity entered is equal to 0 if it is then ValueError is raised
+    Inside the try, check if the quantity entered is equal to 0 or empty string if it is then ValueError is raised.
+    The quantity provided is also checked to make sure only quanity less than or equal to quanity available in 
+    inventory for respective location is entered if not an error message is displayed.
     """
     worksheet_to_validate_quantity = get_worksheet(worksheet)
     cell_location1 = worksheet_to_validate_quantity.find(date)
@@ -485,5 +493,16 @@ def validate_number_of_bottle_input(date, location, quantity, worksheet):
         return False
 
     return True   
+
+print("=============================================================")
+print("=     Welcome to DISC Milk Waste Management Application     =")
+print("=============================================================")
+print("     In a sustainable world it is always a best practice     ")
+print("    to aim for zero food waste. With the features of this    ")
+print("     application to automate data spreadsheet, users can     ")
+print("  easily record and view all related data thus encouraging   ")
+print(" accurate recording and readiness of data for easy analysis. ")
+print("This application is built for a building that has 6 locations")
+print("   (B1, Y1, R1, B2, Y2, R2) where milk is stored and used.   ")
 
 get_user_choice()
