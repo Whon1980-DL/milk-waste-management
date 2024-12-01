@@ -13,7 +13,7 @@ The application is designed to automate editing a google spreadsheet stored on c
 [View Milk Waste Management Google Sheets here](https://docs.google.com/spreadsheets/d/1SSIEZcKAZLnjjF3mJlnYxwPEvKTbCURKLN882PISL-U/edit?usp=sharing)
 
 ## Table of Contents
-### [How to play](#how-to-play-1)
+### [How to use](#how-to-use-1)
 ### [Logic Flowchart](#logic-flowchart-1)
 ### [User Experience (UX)](#user-experience-ux-1)
 * [User Stories](#user-stories)
@@ -36,3 +36,9 @@ The application is designed to automate editing a google spreadsheet stored on c
 * [Content](#content)
 ### [Acknowledgements](#acknowledgements-1)
 ---
+
+## How to Use
+
+Through this application, user can view milk inventory data recoded on linked Google Sheet, record milk delivery, record milk wastage and record milk movement between usage area in a building. The user will be presented with choice they have to select in order to perform certain action. The application will provide respective error messages to guid user to correctly input valid data which will then lead to certain selected action being performed to the Google Sheet.
+
+## Logic flowchart
