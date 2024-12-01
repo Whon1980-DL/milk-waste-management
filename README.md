@@ -41,4 +41,6 @@ The application is designed to automate editing a google spreadsheet stored on c
 
 Through this application, user can view milk inventory data recoded on linked Google Sheet, record milk delivery, record milk wastage and record milk movement between usage area in a building. The user will be presented with choice they have to select in order to perform certain action. The application will provide respective error messages to guid user to correctly input valid data which will then lead to certain selected action being performed to the Google Sheet.
 
-## Logic flowchart
+## Logic Flowchart
+
+![Flowchart](readme_images/logic_flowchart.png)
