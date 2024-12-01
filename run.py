@@ -20,16 +20,22 @@ def get_user_choice():
 
     while True:
 
-        print("=====================================================")
-        print("= Welcome to DISC Milk Waste Management Application =")
-        print("=====================================================")
-        print("(1) View Inventory                                   ")
-        print("(2) Receive Delivery                                 ")
-        print("(3) Record Usage                                     ")
-        print("(4) Record Wastage.                                  ")
-        print("(5) Record Redistribution.                           ")
-        print("(6) Exit.                                            ")
-        print("=====================================================")
+        print("===========================================================")
+        print("=    Welcome to DISC Milk Waste Management Application    =")
+        print("===========================================================")
+        print("    In a sustainable world it is also a best practice      ")
+        print("   to aim for zero food waste. With the features of this   ")
+        print("   application to automate data spreadsheet users can      ")
+        print(" easily record and view all related data thus encouraging  ")
+        print("accurate recording and readiness of data for easy analysis.")
+        print("===========================================================")
+        print("(1) View Inventory                                         ")
+        print("(2) Receive Delivery                                       ")
+        print("(3) Record Usage                                           ")
+        print("(4) Record Wastage.                                        ")
+        print("(5) Record Redistribution.                                 ")
+        print("(6) Exit.                                                  ")
+        print("===========================================================")
 
         choice = input("Enter your choice by entering number 1 to 6:\n")
 
@@ -37,7 +43,7 @@ def get_user_choice():
 
         if choice == '1':
             """
-            Allow user to chose to view full inventory or inventory of specific date 
+            Allow user to chose to view full inventory or inventory of specific date.
             """
 
             while True:
@@ -467,7 +473,7 @@ def validate_number_of_bottle_input(date, location, quantity, worksheet):
     try:
         if int(quantity) > cell_value_to_compare_with:
             raise ValueError(
-                f"Qunantity to remove cannot be more than what is available in the inventory"
+                f"Qunantity to remove cannot exceed what is available in the inventory"
             )
         if quantity == " ":
             raise ValueError(
