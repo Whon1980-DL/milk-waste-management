@@ -39,8 +39,12 @@ The application is designed to automate editing a google spreadsheet stored on c
 
 ## How to Use
 
-Through this application, user can view milk inventory data recoded on linked Google Sheet, record milk delivery, record milk wastage and record milk movement between usage area in a building. The user will be presented with choice they have to select in order to perform certain action. The application will provide respective error messages to guid user to correctly input valid data which will then lead to certain selected action being performed to the Google Sheet.
+Through Milk Waste Management Application, user can view milk inventory data recoded on linked Google Sheet, record milk delivery, record milk wastage and record milk movement between usage area in a building. The user will be presented with choices they have to select in order to perform certain action. For recording action, user will be prompted to enter data along with guideline on how the data should be entered. The application will also provide respective error messages to guid user to correctly input valid data which will then lead to the selected action being performed to the Google Sheet.
 
 ## Logic Flowchart
 
 ![Flowchart](readme_images/logic_flowchart.png)
+
+## User Experience (UX)
+
+The application provided user with clear introduction of the idea behind the design of the application with main menu and instruction to what action should be taken to proceed. Once user selected an action the application will display data or request data as appropriate. The data is displayed in a format that is very easy to understand by the user. The data provided by user is validate with several methods to ensure data provided is valid and of correct format and pattern. The application notify user every time a task is perform successfully and what worksheet has been updated. It is a very simple yet highly capable application to help simplify milk waste management process. 
