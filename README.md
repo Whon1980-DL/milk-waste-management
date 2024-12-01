@@ -56,4 +56,17 @@ The application provided user with clear introduction of the idea behind the des
     * Use the application. Once the user understands the application, they will likely want to use it.
     * Enjoy the experience. The application should be simple and beneficial to the user. 
 
-* 
+* Returning visitor goals
+    * Continue using. The returning visitor may have enjoyed using the application and wants to use again.
+    * Share with friends and colleagues. Recommend colleagues to give the applcaition a try.
+    * Exploring new features, if there is any update. 
+
+* Frequent user goals
+    * Switched to updating the spreadsheet through the application over manual updating.
+    * Organisation made the use of application mandatory for all employees.
+    * Increasing productivity can be seen from using the application.
+    * Accuracy of input data is evident.
+    * Reduction in wastage amount is evident after a certain period of application usage.
+    * Exploring new features, if there is any update.
+
+### Design                          
