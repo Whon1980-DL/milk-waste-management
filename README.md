@@ -48,3 +48,12 @@ Through Milk Waste Management Application, user can view milk inventory data rec
 ## User Experience (UX)
 
 The application provided user with clear introduction of the idea behind the design of the application with main menu and instruction to what action should be taken to proceed. Once user selected an action the application will display data or request data as appropriate. The data is displayed in a format that is very easy to understand by the user. The data provided by user is validate with several methods to ensure data provided is valid and of correct format and pattern. The application notify user every time a task is perform successfully and what worksheet has been updated. It is a very simple yet highly capable application to help simplify milk waste management process. 
+
+### User Stories
+
+* First-time visitor goals
+    * Understand how to use the application. Clear introduction and instructions are given. Understand the valid format of data be requested through understanding displayed error messages.
+    * Use the application. Once the user understands the application, they will likely want to use it.
+    * Enjoy the experience. The application should be simple and beneficial to the user. 
+
+* 
