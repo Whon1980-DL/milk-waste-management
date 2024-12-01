@@ -110,3 +110,9 @@ The application provided user with clear introduction of the idea behind the des
     * if choice 1 of main menu is selected, the submenu to view inventory is displayed and prompt user to select further choice.
 
 ![Submenu](readme_images/submenu.png)
+
+* View Full Inventory
+    * If choice 1 of submenu is selected, the application will display a full inventory.
+
+![Full Inventory](readme_images/full_inventory.png)
+
