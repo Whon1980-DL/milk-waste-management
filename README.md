@@ -107,7 +107,7 @@ The application provided user with clear introduction of the idea behind the des
 ![Google Sheet](readme_images/linked_google_sheet.png)
 
 * View inventory menu
-    * if choice 1 of main menu is selected, the submenu to view inventory is displayed and prompt user to select further choice.
+    * if choice 1 of the main menu is selected, the submenu to view inventory is displayed and prompt user to select further choice.
 
 ![Submenu](readme_images/submenu.png)
 
@@ -115,4 +115,22 @@ The application provided user with clear introduction of the idea behind the des
     * If choice 1 of submenu is selected, the application will display a full inventory.
 
 ![Full Inventory](readme_images/full_inventory.png)
+
+* View Inventory of Specific Date
+    * If choice 2 of the submenu is selected, the application will request the expiry date they want to see from the user.
+    * The application then display the inventory of the specific date provided by the user.
+
+![Request for Expiry Date to View](readme_images/request_specific_date_to_view.png)
+
+![Inventory of Specific Date](readme_images/inventory_of_specific_date.png)
+
+* Exit From Submenu
+    * If choice 3 of the submenu is selected, the user will be directed back to main menu.
+
+* Record Delivery
+    * if choice 2 of the main menu is selected, the application will request user for delivery data to use for updating worksheets accordingly.The application will also notify user once relevant worksheets are updated.
+    * The application will also insert the new expiry date onto remove_by_using and remove_by_wasting worksheets with quantity of 0 for each location for future used.
+
+![Request for Delivery Data](readme_images/request_for_delivery_data.png)
+![Notification of Worksheets Successfully Updated](readme_images/notification_of_worksheet_successfully_updated.png)
 
