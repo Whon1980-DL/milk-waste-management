@@ -199,3 +199,31 @@ CI Python Linter was used to test run.py.
 
 ![run.py linter check](readme_images/python_linter_check.png)
 </details>
+
+## Manual Testing
+
+The application was manually tested extensively using Gitpod terminal, and once the website was deployed on Heroku it was manually tested again, during the creation of the code to the end. Testing of choices display, delivery data input validation, expiry date input validation, location usage and wastage input validation, quantity of milk input validation, data input for milk redistribution and finally the updating of relevant google spreadsheets.
+
+| Feature | Expected Result | Steps Taken | Actual Result | 
+| ------- | -------------- | ----------- | ------------- | 
+| Welcome Screen   | To display welcome message, introduction and Main Menu | Select choice | As Expected | 
+| Select choice 1 of Main Menu | To display view inventory options | Select choice  | As Expected |
+| Submenu | Prompt user to select inventory options | Select choice | As Expected |
+| View Full Inventory Options | To display full inventory | Select choice 1 | As Expected |
+| View Specific Date Inventory   | Request for expiry date of interest | Input expiry date | As Expected |
+| Expiry Date doesn't exist   | To display date doesn't exist | Input expiry date that doesn't already exist in the inventory | As Expected |
+| Display Specific Date Inventory   | Display the inventory of the specific date input | none | As Expected |
+| Return to Main Menu   | To return to Main menu | Select choice 3 | As Expected |
+| Record Delivery   | To request for delivery data | Input delivery data | As Expected |
+| Invalid Date input  | To display date input is invalid, not follow dd-mm-yyyy format | Input date with wrong format | As Expected |
+| Invalid day value   | To display day provided is incorrect | Input day bigger than 31 | As Expected |
+| Invalid month value   | To display month provided is incorrect | Input day bigger than 12 | As Expected |
+| Invalid year value   | To display year provided is in valid | Input year other than 2024 and 2025 | As Expected |
+| Record Milk Usage   | To request for usage data | Input date, location and quantity data | As Expected |
+| Invalid location value   | To display location provided is not valid | Input location other than B1, Y1, R1, B2, Y2, R2 | As Expected |
+| Record Milk Wastage   | To request for wastage data | Input date, location and quantity data | As Expected |
+| Quantity to remove more than availability  | To display the quantity to move cannot exceed what is available in the inventory | Input quantity that exceed the quantity in the inventory | As Expected |
+| Record Milk Redistribution   | Request for expiry date, location from, quantity and location to  | Input redistribution data  | As Expected |
+| Exit application  | To exit from application | Select option 6 of the Main Menu | As Expected |
+
+
