@@ -191,10 +191,6 @@ The application provided user with clear introduction of the idea behind the des
 
 ---
 
-## Linking to Google Sheet
-
----
-
 ## Testing 
 
 CI Python Linter was used to test run.py.
@@ -239,9 +235,9 @@ The application was manually tested extensively using Gitpod terminal, and once 
     * Cannot continue with 0 input
     * Must be number between 1 - 6
 
-![Empty String Choice](readme_images/empyty_string_choice.png)
+![Empty String Choice](readme_images/empty_string_choice.png)
 ![Zero Value Choice](readme_images/zero_value_choice.png)
-![Alphabetic Choice](readme_images/alphabet_choice.png)
+![Alphabetic Choice](readme_images/alphabetic_choice.png)
 ![Two Digits Choice](readme_images/more_than_one_digit_choice.png)
 ![More Than Six Choice](readme_images/more_than_six_choice.png)
 ![Valid Choice](readme_images/valid_choice.png)
