@@ -160,8 +160,8 @@ The application provided user with clear introduction of the idea behind the des
 ## Features Left to Implement
 
 * Option to calculate average 5 days usage for next milk order.
-* Validation to check and reject if user enter expiry date that has passed the use-by-date.
-* Function to automatically erase inventory entry with 0 quantity or expiry date older than current.
+* Validation to check and reject if user enter expiry date that has passed the use-by-date for recording delivery.
+* Function to automatically erase inventory entry with 0 quantity or expiry date older than current date.
 * Function to provide statistic of wastage. 
 
 ---
@@ -239,7 +239,12 @@ The application was manually tested extensively using Gitpod terminal, and once 
     * Cannot continue with 0 input
     * Must be number between 1 - 6
 
-![Choice input Validation]()
+![Empty String Choice](readme_images/empyty_string_choice.png)
+![Zero Value Choice](readme_images/zero_value_choice.png)
+![Alphabetic Choice](readme_images/alphabet_choice.png)
+![Two Digits Choice](readme_images/more_than_one_digit_choice.png)
+![More Than Six Choice](readme_images/more_than_six_choice.png)
+![Valid Choice](readme_images/valid_choice.png)
 
 * Delivery data
     * Must have 7 values

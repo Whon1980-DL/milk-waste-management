@@ -443,15 +443,15 @@ def validate_choice_input(value):
     try:
         if value == " ":
             raise ValueError(
-                f"Input value can not be empty"
+                f"Input value can not be empty."
             )
         elif len(value) > 1:
             raise ValueError(
                 f"Input value must be a single digit number, "
-                f"you provided {len(value)} digits number"
+                f"you provided {len(value)} digits number."
             )
     except ValueError as e:
-        print(f"invalid data: {e}, please try again.\n")
+        print(f"{e}\n")
         return
 
     return
