@@ -281,14 +281,16 @@ The application was manually tested extensively using Gitpod terminal, and once 
 * Location data for removing and redistributing
     * Cannot be anything else other than B1, Y1, R1, B2, Y2, R2
 
-![Location Data Validation]()
+![Location Data Invalid](readme_images/location_data_invalid.png)
 
 * Milk quantity data for removing and redistributing 
     * Cannot continue with empty input
     * Cannot continue with 0 input
     * Quantity to move from or remove cannot exceed what is available in the inventory for any respective locations
 
-![Milk Quantity Data Validation]()
+![Milk Quantity Data Empty](readme_images/quantity_data_empty.png)
+![Milk Quantity Data Zero](readme_images/quantity_data_zero.png)
+![Milk Quantity Data More Than Available](readme_images/quantity_data_more_than_available.png)
 
 ## Fixed Bugs
 
