@@ -250,7 +250,15 @@ The application was manually tested extensively using Gitpod terminal, and once 
     * Year must be 2024 or 2025
     * Quanity for each location cannot exceed 100 units
 
-![Delivery Data Validation]()
+![Delivery Data More Than 7 Values ](readme_images/delivery_data_morea_than_7_value.png)
+![Delivery Data Missing First Dash](readme_images/delivery_data_missing_first_dash.png)
+![Delivery Data Missing Second Dash](readme_images/delivery_data_missing_second_dash.png)
+![Delivery Data Day Too Big](readme_images/delivery_data_day_too_big.png)
+![Delivery Data Day Zero](readme_images/delivery_data_day_zero.png)
+![Delivery Data Month Too Big](readme_images/delivery_data_month_too_big.png)
+![Delivery Data Month Zero](readme_images/delivery_data_month_zero.png)
+![Delivery Data Year Invalid](readme_images/delivery_data_invalid_year.png)
+
 
 * Expiry date data for removing 
     * Must be of 10 characters
@@ -260,7 +268,15 @@ The application was manually tested extensively using Gitpod terminal, and once 
     * Month must be number between 1 - 12
     * Year must be 2024 or 2025
 
-![Expiry Date Validation]()
+![Expiry Date More Than 10 Characters](readme_images/ex_date_more_than_10_char.png)
+![Expiry Date Missing First Dash](readme_images/ex_date_miss_first_dash.png)
+![Expiry Date Missing Second Dash](readme_images/ex_date_miss_second_dash.png)
+![Expiry Date Day Too Big](readme_images/ex_date_day_too_big.png)
+![Expiry Date Day Zero](readme_images/ex_date_day_zero.png)
+![Expiry Date Month Too Big](readme_images/ex_date_day_too_big.png)
+![Expiry Date Month Zero](readme_images/ex_date_day_zero.png)
+![Expiry Date Year Invalid](readme_images/ex_date_year_invalid.png)
+![Expiry Date Dosenot Exist](readme_images/ex_date_doesnot_exist.png)
 
 * Location data for removing and redistributing
     * Cannot be anything else other than B1, Y1, R1, B2, Y2, R2
