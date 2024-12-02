@@ -294,7 +294,10 @@ The application was manually tested extensively using Gitpod terminal, and once 
 
 ## Fixed Bugs
 
-* 
+* When using range of index of list to test for date validation, index number used were incorrect and was later correct.
+* When locating cell location on a spreadsheet column value were incorrect and had to subtract 1 to correct it to select correct entry to display when viewing specific date inventory in particular.
+* User input had to be converted to integer using int() before it can be compared with value on the spreadsheet.
+* Value on usage and wastage for entry with expiry date cannot be empty and has contain zero for future quantity calculation. Thus expiry and 0 value of quantity had to be parsed to usage and wastage every time after delivery is recorded. 
 
 ## Deployment
 
@@ -350,4 +353,4 @@ By forking the repository, we make a copy of the original repository on our GitH
 
  * My mentor Mitko Bachvarov provided helpful feedback.
  * Slack community for encouragement.
- * My wife for her full support and my 2 sons who have been very encouraging.
+ * My wife, Nan,  for her full support and my 2 sons, Dylan and Logan, who have been very encouraging.
