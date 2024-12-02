@@ -469,7 +469,7 @@ def validate_delivery_data(values, date_value, date_value_as_list, quantity):
             raise ValueError(
                 f"Exactly 7 values required with first being the "
                 f"expiry date (dd-mm-yyyy) then quantity for each hub "
-                f"separated by commas, you provided {len(values)} characters "
+                f"separated by commas, you provided {len(values)} values "
               )
         for x in quantity:
             if int(x) > 100:
